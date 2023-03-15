@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Best Practice in Data Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="John Thompson" />
+    <script src="basic_workflow_files/header-attrs-2.16/header-attrs.js"></script>
+    <link href="basic_workflow_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="basic_workflow_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="basic_workflow_files/panelset-0.2.6/panelset.js"></script>
+    <script src="basic_workflow_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="basic_workflow_files/viz-1.8.2/viz.js"></script>
+    <link href="basic_workflow_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="basic_workflow_files/grViz-binding-1.0.9/grViz.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Best Practice in Data Analysis
+]
+.author[
+### John Thompson
+]
+.date[
+### 9th Febuary 2023
+]
+
+---
+
+
+
+
+# The tidyverse workflow
+
+.center[![](workflow.png)]
+
+&lt;br&gt;
+
+-   tidyverse packages for each stage    
+-   all data analysis projects have a similar structure  
+-   adopt a best practice approach to all stages of the project  
+
+---
+# A More Realistic Data Analysis
+<div id="htmlwidget-ed909d290cb758144fa4" style="width:800px;height:600px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed909d290cb758144fa4">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR]\n\nsubgraph cluster_1 {\n   label = \"Raw Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=9]\n   a1 [label = \"local\"]\n   a2 [label = \"local\"]\n   a3 [label = \"remote\"]\n\n   edge[style=invis];\n   a1 -> a2 -> a3;\n   }\n\nsubgraph cluster_2 {\n   label = \"R Format Copies\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   b1 b2 b3\n\n   edge[style=invis];\n   b1 -> b2 -> b3;\n   }\n\nsubgraph cluster_3 {\n   label = \"Clean Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   c1 c2 c3\n\n   edge[style=invis];\n   c1 -> c2 -> c3;\n   }\n\nsubgraph cluster_4 {\n   label = \"Preprocessed Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   d1 d2 d3 d4 d5 \n\n   edge[style=invis];\n   d1 -> d2 -> d3 -> d4 -> d5;\n}\n   \n   subgraph cluster_5 {\n   label = \"Analysis DataSets\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   e1 e2 \n\n   edge[style=invis];\n   e1 -> e2;\n   }\n   \n  subgraph cluster_6 {\n   label = \"Analysis One\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   f1 f2 f3 f4 \n\n   edge[style=invis];\n   f1 -> f2 -> f3 -> f4;\n  }\n   \n     subgraph cluster_7 {\n   label = \"Analysis Two\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   g1 g2 g3 \n\n   edge[style=invis];\n   g1 -> g2 -> g3;\n     }\n   \n        subgraph cluster_8 {\n   label = \"Analysis Three\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   h1 \n\n   }\nedge [color = black]\na1 -> b1 -> c1 -> d1 -> e1\nc1 -> d2 -> e1\na2 -> b2 -> c2 -> d3 -> e1 -> g1\ne1 -> g2 -> h1\ne1 -> g3\nc3 -> e1 -> f1 -> h1\ne1 -> f2\nc2 -> d4 -> e2 -> f3\na3 -> b3 -> c3 -> d5 -> e2 -> f4\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+---
+# Notes on the Realistic Project
+
+&lt;br&gt;
+- You do not have this diagram .. instead, you have a folder of data files and R scripts  
+&lt;br&gt;
+- You have many R scripts  
+    - `read_local.R`, `read_remote.R` etc.  
+&lt;br&gt;
+- The scripts have been through many iterations  
+    - `read_local.R`, `read_local2.R`, `read_local3.R`, `read_local3_update.R` etc.  
+&lt;br&gt;
+- You are not the only person working on these data  
+
+---
+# A Typical Scenario
+
+- You prepare `Analysis One` and find an association of `1.37` between gene A and Disease X, which you present at a conference in Newcastle   
+&lt;br&gt;
+- A colleague prepares `Analysis Two` and presents their results in Paris  
+&lt;br&gt;
+- The professor decides to take the credit by writing an article about `Analysis Three` (combining One and Two)  
+&lt;br&gt;
+- The professor asks for your results and discovers that Analysis One is based on `n=4112` and Analysis Two is based on `n=4114`. They tell you both to sort it out  
+&lt;br&gt;
+- The problem lies in the exclusions, so you decide to include only patients accepted in both analyses, `n=4107`   
+&lt;br&gt;
+- You re-run Analysis One and get an updated association of `1.35`, which you email to the professor  
+---
+# Your Analysis Unravels
+
+&lt;br&gt;
+- In the middle of the night it dawns on you that excluded the extra patients in `analysis_one_v8_for_prof.R` but they were not excluded from the pre-processing  
+&lt;br&gt;
+- You remove the new exclusions to create `analysis_one_v8_for_prof2.R` and add them to `local_clean3.R` to create `local_clean3_strict.R`, which you run.  
+&lt;br&gt;
+- You now re-run the pre-possessing scripts `local_pca_v5.R` and `local_normalise_v3.R`, but you cannot recall whether you previously normalised before pca or vice versa. You are not sure whether it matters, so you try both, the association is either `1.32` or `1.41`  
+&lt;br&gt;
+- You avoid the professor, while you try to sort it out.  
+---
+# Things Get Worse
+
+&lt;br&gt;
+- You get an email from Perth. Someone was at your Newcastle talk and based on your association of `1.37`, they are planning to do some experiments on mice. They want to know what happens to the association when you adjust for sex. The analysis will be quick to run and the result will inform their experimental design.  
+&lt;br&gt;
+- You try to reconstruct the analysis based on n=4112, but when you re-run it without sex adjustment you now get `1.30`. You have no idea why. Sex adjustment of this new analysis changes the result to `1.16`, which looks as if it could be important to Perth. 
+&lt;br&gt;
+- You work for days of trying to reconstruct the Newcastle analysis, but are unsuccessful. Perth email questioning the delay as they want to start their experiment. You are still avoiding the professor.    
+&lt;br&gt;
+- You would like to ask for help, but fear that if this became public, you would never get another job. You are sure that nobody else is this disorganised.   
+ 
+---
+# Reasons for adopting Best Practice
+
+### Error avoidance
+
+**Errors are inevitable. Adopt a practices that minimise them or make them easier to spot**
+
+### Efficiency
+
+**Data analysis is difficult and time consuming. Adopt practices that save time and effort**
+
+### Clarity &amp; Reproducibility
+
+**Your methods must be clear. If you cannot reproduce a result exactly, how do you know if it is correct?**
+
+### Communication
+
+**Science is worthless unless it is shared. Cover-ups are unethical**
+
+---
+# Best Practice in Data Analysis
+
+### Reasons
+
+- Error Avoidance  
+- Efficiency  
+- Clarity &amp; Reproducibility  
+- Communication
+
+### Ways to Achieve Good Practice
+
+- Standardisation  
+- Archiving  
+- Documentation  
+- Modularisation    
+- Testing and checking  
+- Openness  
+
+---
+# Methods
+
+.panelset[
+.panel[.panel-name[Standardise]
+###Standardisation
+
+- work in a consistent structured way
+  - standard folder structure
+  - standard file naming convention      
+  - same archiving method  
+- follow an R style guide   
+- reuse the same skills (packages)  
+]
+.panel[.panel-name[Archive]
+###Archive
+
+- archive your code frequently  
+- archive the data when it changes    
+- archive results so that you do not re-run the same code  
+- record the methods that you use
+  - the order that scripts need to be run   
+  - the versions numbers of any software or packages    
+  - seeds used for simulations and Bayesian computations    
+]
+.panel[.panel-name[Document]
+###Documentation  
+
+- documentation is tiresome but essential 
+- document as you go along. You will forget very quickly  
+- make a README and keep it up to date    
+- do NOT use undocumented short cuts
+  - click-based software or manual data editing    
+  - cut/paste into a report      
+- place comments within your scripts  
+- document the data as well as your code  
+- write internal reports on all intermediate steps      
+- keep an analysis diary      
+]
+.panel[.panel-name[Functions]
+###Modularisation
+
+- modularise your code   
+- DRY =&gt; Don't Repeat Yourself  ... avoid repetitive code   
+- write functions for common tasks  
+- place your functions in a package  
+- share your functions  
+- use existing functions whenever you can  
+- adopt the functional programming style  
+]
+.panel[.panel-name[Testing]
+###Testing &amp; Checking
+
+- start simple .. test .. add to the complexity  
+- prepare a dashboard for data exploration  
+- print/plot/tabulate to inspect intermediate results  
+- try to reproduce known findings  
+- test each module/function before using it   
+- check whether results change whenever you "improve" the code  
+- use a smaller dataset when developing the analysis  
+  - quicker and easier to check  
+]
+.panel[.panel-name[Openness]
+###Openness
+
+- openness encourages higher standards  
+- collaborate, share the load     
+- make your code public  
+  - to help others  
+  - someone might suggest an improvement    
+- start a conversation with other researchers  
+- write a blog  
+- use social media to publicise your work  
+]
+]
+---
+# Useful Software
+
+&lt;br&gt;
+&lt;br&gt;
+
+- **git**: professional archiving tool for code/scripts   
+- **github**: a cloud based repository that uses git     
+- **rmarkdown**: creates reproducible documentation; report, slides, blog, article, thesis  
+- **quarto**: an extension to rmarkdown  
+- **renv**: R package for recording/controlling package version numbers  
+- **repo**: A package for archiving data and results  
+- **makepipe**: A package for ordering R scripts  
+- **targets**: R package for creating reproducible workflows and caching intermediate results (cf repo + makepipe)   
+
+There are many more R workflow packages, see  https://github.com/jdblischak/r-project-workflows  
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

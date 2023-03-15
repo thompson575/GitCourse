@@ -1,0 +1,131 @@
+---
+title: "Course Organisation"
+author: "John Thompson"
+date: "9th Febuary 2023"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    css: ["metropolis", "style.css"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+```
+
+
+# Course Content
+
+<br>
+## Original request
+
+-   Teach **git** and **rmarkdown**
+
+<br>
+## My Plan
+
+-   Teach **Git**, **GitHub** and **rmarkdown** 
+-   Emphasise practical skills that you can use every day  
+-   My main aim is **attitudinal change**: the course is only a success, if you come away believing that you have to change the way that you work
+
+---
+# I asked ChatGPT
+
+<br>
+```{r eval=FALSE, echo=TRUE}
+Hi, I have to teach a course on git and github aimed at data analysts and
+biostatisticians. What are the key points that I should make to motivate
+them to use git and github?
+```
+---
+# ChatGPT Replied
+
+```{r eval=FALSE, echo=TRUE}
+Great question! Git and GitHub are powerful tools for version control and
+collaboration that can greatly benefit data analysts and biostatisticians. 
+Here are some key points that you can use to motivate your students to use Git 
+and GitHub:
+
+Version control: Git allows users to keep track of changes made to files
+and revert to previous versions if necessary. This can be extremely
+useful when working with large datasets or codebases that are constantly
+being updated.
+
+Collaboration: GitHub provides a platform for collaborating on projects
+with other team members, both locally and remotely. It allows multiple
+users to work on the same files at the same time, making it easy to share
+code and data and to track changes made by others.
+
+Code reviews: GitHub allows for code reviews, where team members can
+review each other's code and suggest changes or improvements. This can
+help ensure that code is well-documented, follows best practices, and is
+free of errors.
+```
+---
+# More advice from ChatGPT
+
+```{r eval=FALSE, echo=TRUE}
+Open source community: GitHub is also home to a large open-source
+community where users can find code and contribute to projects. By
+contributing to open-source projects, students can build their skills and
+network with other professionals in their field.
+
+Portfolio building: By using Git and GitHub to manage their code and
+data, students can create a professional portfolio that showcases their
+skills and expertise. This can be a valuable asset when applying for jobs
+or internships.
+
+Automation: Git and GitHub can be integrated with other tools to automate
+tasks such as running tests, building documentation, and deploying code.
+This can save time and reduce the risk of errors.
+
+Overall, Git and GitHub are essential tools for data analysts and
+biostatisticians who want to work efficiently, collaborate effectively,
+and build their skills and portfolio. By mastering these tools, students
+can become more productive and successful in their careers.
+```
+---
+# Why Context is Important
+<br>
+- ChatGPT makes some good points, but I don't think that I'd change my way of working based on such abstract ideas.  
+<br>
+-   Learning the commands of rmarkdown, git and github is easy .. use Google to look them up when you need them    
+<br>
+-   Efficiently integrating these skills into your day to day work is more challenging and takes experience  
+<br>
+-   Raises the more general question, **what is the best way to organise a data analysis project?**
+
+---
+
+# Course Organisation
+
+<br>
+-   A brief overview of Git, GitHub and rmarkdown in the context of the best way to organise a data analysis project  
+<br>
+-   After coffee; I'll create a data analysis project using best practice    
+<br>
+-   The demonstration project is called CAGE (Classification After Gene Expression)  
+<br>
+-   The project will use Git, GitHub and rmarkdown  
+<br>
+-   Your exercise is to use the same best practice on a similar project called RAGE (Regression After Gene Expression)  
+
+---
+# It is a Masterclass
+
+-   I will assume that you already know  
+    -   basic statistical methods  
+    -   how to use R and RStudio  
+    -   about microarrays and gene expression  
+<br>
+
+-   <p style="color:red">
+
+    Stop me if I assume too much
+
+    </p>
+
+<br>
+-   I will avoid teaching things that you can look up on the internet  
+<br>
+-   Less on **how** you do it and more on **why** and **when**

@@ -1,0 +1,95 @@
+---
+title: "Rmarkdown overview"
+author: "John Thompson"
+date: "9th Febuary 2023"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    css: ["metropolis", "style.css"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Markup Languages
+
+<br>
+- A Markup Language allows formatting instructions to be inserted into plain text e.g. to produce bold, italics, numbered lists, insert an image etc.   
+
+<br>
+
+- Commonly used markup languages include **html** and **latex**   
+
+---
+# Markdown
+
+<br>
+- Markdown is a simple markup language first released in 2004    
+  - it only offers very basic formatting  
+  - it is very easy to learn   
+<br>
+- Markdown files have the **.md** extension  
+<br>
+- Markdown files can be rendered into an html document, pdf, Word document, slide presentation, website, blog, book, thesis, research article      
+---
+# YAML
+
+<br>
+- YAML (Yet Another Markup Language) is used to create a header for a markdown file  
+<br>
+- the header controls the format of the final document, e.g. pdf or html, whether or not to add a table of contents, choice of theme etc.
+---
+# Markdown Example
+
+```{r eval=FALSE, echo = TRUE}
+---
+title: "Markdown"
+author: "John Thompson"
+date: "2023-02-17"
+output: html_document
+---
+
+## Markdown
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word
+documents. For more details see the RStudio menu `Help - Markdown Quick
+Reference`.
+
+When you click the **preview** button in RStudio, the formatted document 
+is produced.
+```
+---
+# Rmarkdown
+
+<br>
+- Rmarkdown is an R package that extends markdown by allowing blocks of R Code to be placed within a markdown file  
+- Prior to rendering, the  R code is executed and the results are knitted into the markdown file  
+- The blocks of R code are called **chunks**
+- Rmarkdown files have the **.rmd** extension.  
+- see https://rmarkdown.rstudio.com/ 
+
+---
+# Rmarkdown Example
+
+````{r eval=FALSE, echo = TRUE}
+---
+title: "Rmarkdown"
+author: "John Thompson"
+date: "2023-02-17"
+output: html_document
+---
+
+## RMarkdown
+
+Rmarkdown allows the addition of R code to a markdown file. The chunk below
+summarises the cars data frame and adds the results to the document. 
+**echo = FALSE** tells rmarkdown to add the results but not the R code.
+
+```{r echo = FALSE}
+summary(cars)
+```
+
+When you click the **knit** button in RStudio, the R Code is executed, the
+results are inserted and then the formatted document is produced.
+````
