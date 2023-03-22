@@ -4,11 +4,11 @@
     <title>Best Practice in Data Analysis</title>
     <meta charset="utf-8" />
     <meta name="author" content="John Thompson" />
-    <script src="basic_workflow_files/header-attrs-2.16/header-attrs.js"></script>
+    <script src="basic_workflow_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="basic_workflow_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="basic_workflow_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
     <script src="basic_workflow_files/panelset-0.2.6/panelset.js"></script>
-    <script src="basic_workflow_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="basic_workflow_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
     <script src="basic_workflow_files/viz-1.8.2/viz.js"></script>
     <link href="basic_workflow_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
     <script src="basic_workflow_files/grViz-binding-1.0.9/grViz.js"></script>
@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### John Thompson
 ]
 .date[
-### 9th Febuary 2023
+### 29th March 2023
 ]
 
 ---
@@ -33,33 +33,23 @@ class: center, middle, inverse, title-slide
 
 
 
-# The tidyverse workflow
 
-.center[![](workflow.png)]
-
-&lt;br&gt;
-
--   tidyverse packages for each stage    
--   all data analysis projects have a similar structure  
--   adopt a best practice approach to all stages of the project  
-
+# A Data Analysis Workflow
+<div id="htmlwidget-61fc95123537986b71ad" style="width:800px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-61fc95123537986b71ad">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR]\n\nsubgraph cluster_1 {\n   label = \"Raw Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=9]\n   a1 [label = \"local\"]\n   a2 [label = \"local\"]\n   a3 [label = \"remote\"]\n\n   edge[style=invis];\n   a1 -> a2 -> a3;\n   }\n\nsubgraph cluster_2 {\n   label = \"R Format Copies\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   b1 b2 b3\n\n   edge[style=invis];\n   b1 -> b2 -> b3;\n   }\n\nsubgraph cluster_3 {\n   label = \"Clean Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   c1 c2 c3\n\n   edge[style=invis];\n   c1 -> c2 -> c3;\n   }\n\nsubgraph cluster_4 {\n   label = \"Preprocessed Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   d1 d2 d3 d4 d5 \n\n   edge[style=invis];\n   d1 -> d2 -> d3 -> d4 -> d5;\n}\n   \n   subgraph cluster_5 {\n   label = \"Analysis DataSets\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   e1 e2 \n\n   edge[style=invis];\n   e1 -> e2;\n   }\n   \n  subgraph cluster_6 {\n   label = \"Analysis One\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   f1 f2 f3 f4 \n\n   edge[style=invis];\n   f1 -> f2 -> f3 -> f4;\n  }\n   \n     subgraph cluster_7 {\n   label = \"Analysis Two\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   g1 g2 g3 \n\n   edge[style=invis];\n   g1 -> g2 -> g3;\n     }\n   \n        subgraph cluster_8 {\n   label = \"Analysis Three\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   h1 \n\n   }\nedge [color = black]\na1 -> b1 -> c1 -> d1 -> e1\nc1 -> d2 -> e1\na2 -> b2 -> c2 -> d3 -> e1 -> g1\ne1 -> g2 -> h1\ne1 -> g3\nc3 -> e1 -> f1 -> h1\ne1 -> f2\nc2 -> d4 -> e2 -> f3\na3 -> b3 -> c3 -> d5 -> e2 -> f4\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
-# A More Realistic Data Analysis
-<div id="htmlwidget-ed909d290cb758144fa4" style="width:800px;height:600px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ed909d290cb758144fa4">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR]\n\nsubgraph cluster_1 {\n   label = \"Raw Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=9]\n   a1 [label = \"local\"]\n   a2 [label = \"local\"]\n   a3 [label = \"remote\"]\n\n   edge[style=invis];\n   a1 -> a2 -> a3;\n   }\n\nsubgraph cluster_2 {\n   label = \"R Format Copies\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   b1 b2 b3\n\n   edge[style=invis];\n   b1 -> b2 -> b3;\n   }\n\nsubgraph cluster_3 {\n   label = \"Clean Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   c1 c2 c3\n\n   edge[style=invis];\n   c1 -> c2 -> c3;\n   }\n\nsubgraph cluster_4 {\n   label = \"Preprocessed Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   d1 d2 d3 d4 d5 \n\n   edge[style=invis];\n   d1 -> d2 -> d3 -> d4 -> d5;\n}\n   \n   subgraph cluster_5 {\n   label = \"Analysis DataSets\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   e1 e2 \n\n   edge[style=invis];\n   e1 -> e2;\n   }\n   \n  subgraph cluster_6 {\n   label = \"Analysis One\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   f1 f2 f3 f4 \n\n   edge[style=invis];\n   f1 -> f2 -> f3 -> f4;\n  }\n   \n     subgraph cluster_7 {\n   label = \"Analysis Two\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   g1 g2 g3 \n\n   edge[style=invis];\n   g1 -> g2 -> g3;\n     }\n   \n        subgraph cluster_8 {\n   label = \"Analysis Three\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   h1 \n\n   }\nedge [color = black]\na1 -> b1 -> c1 -> d1 -> e1\nc1 -> d2 -> e1\na2 -> b2 -> c2 -> d3 -> e1 -> g1\ne1 -> g2 -> h1\ne1 -> g3\nc3 -> e1 -> f1 -> h1\ne1 -> f2\nc2 -> d4 -> e2 -> f3\na3 -> b3 -> c3 -> d5 -> e2 -> f4\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
----
-# Notes on the Realistic Project
+# Notes on the Workflow
 
 &lt;br&gt;
-- You do not have this diagram .. instead, you have a folder of data files and R scripts  
+- People rarely make such a diagram .. instead, they have a folder of data files and R scripts  
 &lt;br&gt;
-- You have many R scripts  
+- They will have many R scripts  
     - `read_local.R`, `read_remote.R` etc.  
 &lt;br&gt;
-- The scripts have been through many iterations  
+- The scripts will have been through many iterations  
     - `read_local.R`, `read_local2.R`, `read_local3.R`, `read_local3_update.R` etc.  
 &lt;br&gt;
-- You are not the only person working on these data  
+- Often, several people work on the same data  
 
 ---
 # A Typical Scenario
@@ -68,46 +58,46 @@ class: center, middle, inverse, title-slide
 &lt;br&gt;
 - A colleague prepares `Analysis Two` and presents their results in Paris  
 &lt;br&gt;
-- The professor decides to take the credit by writing an article about `Analysis Three` (combining One and Two)  
+- Your supervisor decides to take the credit by writing an article about `Analysis Three` (combining One and Two)  
 &lt;br&gt;
-- The professor asks for your results and discovers that Analysis One is based on `n=4112` and Analysis Two is based on `n=4114`. They tell you both to sort it out  
+- The supervisor asks for your results and discovers that Analysis One is based on `n=4112` and Analysis Two is based on `n=4114`. They tell you to sort it out  
 &lt;br&gt;
-- The problem lies in the exclusions, so you decide to include only patients accepted in both analyses, `n=4107`   
+- The problem lies in the exclusions, so you agree to include only patients accepted in both analyses, `n=4107`   
 &lt;br&gt;
-- You re-run Analysis One and get an updated association of `1.35`, which you email to the professor  
+- You re-run Analysis One and get an updated association of `1.35`, which you email to the supervisor  
 ---
 # Your Analysis Unravels
 
 &lt;br&gt;
-- In the middle of the night it dawns on you that excluded the extra patients in `analysis_one_v8_for_prof.R` but they were not excluded from the pre-processing  
+- In the middle of the night it dawns on you that you excluded the extra patients in `analysis_one_v8_for_prof.R`, but they were not excluded from the pre-processing  
 &lt;br&gt;
-- You remove the new exclusions to create `analysis_one_v8_for_prof2.R` and add them to `local_clean3.R` to create `local_clean3_strict.R`, which you run.  
+- You remove the new exclusions to create `analysis_one_v8_for_prof2.R` and add them to `local_clean3.R` to create `local_clean3_strict.R`, which you run  
 &lt;br&gt;
-- You now re-run the pre-possessing scripts `local_pca_v5.R` and `local_normalise_v3.R`, but you cannot recall whether you previously normalised before pca or vice versa. You are not sure whether it matters, so you try both, the association is either `1.32` or `1.41`  
+- You now re-run the pre-possessing scripts `local_pca_v5.R` and `local_normalise_v3.R`, but you cannot recall whether you previously normalised before pca, or vice versa. You are not sure whether it matters, so you try both, the association is either `1.32` or `1.41`  
 &lt;br&gt;
-- You avoid the professor, while you try to sort it out.  
+- You avoid your supervisor, while you try to sort it out.  
 ---
 # Things Get Worse
 
 &lt;br&gt;
-- You get an email from Perth. Someone was at your Newcastle talk and based on your association of `1.37`, they are planning to do some experiments on mice. They want to know what happens to the association when you adjust for sex. The analysis will be quick to run and the result will inform their experimental design.  
+- You get an email from someone who was at your Newcastle talk. Based on work, they are planning to do some experiments on mice. They want to know what happens to 1.37 when you adjust for sex. They are sure that the adjusted analysis will be quick and the result will inform their experimental design.  
 &lt;br&gt;
-- You try to reconstruct the analysis based on n=4112, but when you re-run it without sex adjustment you now get `1.30`. You have no idea why. Sex adjustment of this new analysis changes the result to `1.16`, which looks as if it could be important to Perth. 
+- You try to reconstruct the analysis based on n=4112, but when you re-run it, you now get `1.31` and not `1.37`. You have no idea why. Sex adjustment of this new analysis changes the result to `1.16`, which could be important. You wonder if 1.37 was a typo for 1.31 in your slides.  
 &lt;br&gt;
-- You work for days of trying to reconstruct the Newcastle analysis, but are unsuccessful. Perth email questioning the delay as they want to start their experiment. You are still avoiding the professor.    
+- You work for days trying to reconstruct the Newcastle analysis, but are unsuccessful. A second email questions the delay. You are still avoiding your supervisor.    
 &lt;br&gt;
-- You would like to ask for help, but fear that if this became public, you would never get another job. You are sure that nobody else is this disorganised.   
+- You would like to ask for help, but fear that if this became public, you would never get a job. You are sure that nobody else is this disorganised.   
  
 ---
 # Reasons for adopting Best Practice
 
 ### Error avoidance
 
-**Errors are inevitable. Adopt a practices that minimise them or make them easier to spot**
+**Errors are inevitable. Adopt practices that minimise them or make them easier to spot**
 
 ### Efficiency
 
-**Data analysis is difficult and time consuming. Adopt practices that save time and effort**
+**Data analysis is time consuming. Adopt practices that save time and effort**
 
 ### Clarity &amp; Reproducibility
 
@@ -154,12 +144,17 @@ class: center, middle, inverse, title-slide
 ###Archive
 
 - archive your code frequently  
-- archive the data when it changes    
-- archive results so that you do not re-run the same code  
+- archive the raw data when it changes    
 - record the methods that you use
   - the order that scripts need to be run   
   - the versions numbers of any software or packages    
-  - seeds used for simulations and Bayesian computations    
+  - seeds used for simulations and Bayesian computations  
+- cache results   
+- archive results if the compute time is very long  
+&lt;br&gt;
+&lt;br&gt;
+- cache .. short-term storage for current results files   
+- archive .. long-term storage for current and previous versions of the results  
 ]
 .panel[.panel-name[Document]
 ###Documentation  
@@ -169,16 +164,16 @@ class: center, middle, inverse, title-slide
 - make a README and keep it up to date    
 - do NOT use undocumented short cuts
   - click-based software or manual data editing    
-  - cut/paste into a report      
+  - cut/paste into a report/slides        
 - place comments within your scripts  
 - document the data as well as your code  
 - write internal reports on all intermediate steps      
 - keep an analysis diary      
 ]
-.panel[.panel-name[Functions]
+.panel[.panel-name[Modules]
 ###Modularisation
 
-- modularise your code   
+- modularise your code with a different script for each task     
 - DRY =&gt; Don't Repeat Yourself  ... avoid repetitive code   
 - write functions for common tasks  
 - place your functions in a package  
@@ -190,13 +185,13 @@ class: center, middle, inverse, title-slide
 ###Testing &amp; Checking
 
 - start simple .. test .. add to the complexity  
-- prepare a dashboard for data exploration  
-- print/plot/tabulate to inspect intermediate results  
-- try to reproduce known findings  
-- test each module/function before using it   
-- check whether results change whenever you "improve" the code  
 - use a smaller dataset when developing the analysis  
   - quicker and easier to check  
+- know your data. Prepare a dashboard for data exploration  
+- always print/plot/tabulate to inspect intermediate results  
+- try to reproduce known findings  
+- test each script/function before using it   
+- check whether results change whenever you "improve" your code  
 ]
 .panel[.panel-name[Openness]
 ###Openness
@@ -204,27 +199,28 @@ class: center, middle, inverse, title-slide
 - openness encourages higher standards  
 - collaborate, share the load     
 - make your code public  
-  - to help others  
-  - someone might suggest an improvement    
+  - secrecy is anti-scientific    
+  - shared code might help others  
+  - someone might suggest an improvement   
 - start a conversation with other researchers  
 - write a blog  
 - use social media to publicise your work  
 ]
 ]
 ---
-# Useful Software
+# Resources
 
 &lt;br&gt;
 &lt;br&gt;
 
-- **git**: professional archiving tool for code/scripts   
-- **github**: a cloud based repository that uses git     
-- **rmarkdown**: creates reproducible documentation; report, slides, blog, article, thesis  
-- **quarto**: an extension to rmarkdown  
+- **Git**: professional archiving tool for code/scripts (version control)    
+- **GitHub**: a cloud based repository that uses Git     
+- **rmarkdown**: creates reproducible documentation; report, slides, website, article, thesis  
+- **quarto**: the latest extension of rmarkdown  
 - **renv**: R package for recording/controlling package version numbers  
-- **repo**: A package for archiving data and results  
-- **makepipe**: A package for ordering R scripts  
-- **targets**: R package for creating reproducible workflows and caching intermediate results (cf repo + makepipe)   
+- **repo** &amp; **archivist**: R packages for archiving data and results  
+- **makepipe**: R package for ordering scripts  
+- **targets**: R package for ordering scripts and caching intermediate results (cf archivist + makepipe)   
 
 There are many more R workflow packages, see  https://github.com/jdblischak/r-project-workflows  
 

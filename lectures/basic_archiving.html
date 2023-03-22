@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Archiving overview</title>
+    <title>Code Archiving (Version Control)</title>
     <meta charset="utf-8" />
     <meta name="author" content="John Thompson" />
-    <script src="basic_archiving_files/header-attrs-2.16/header-attrs.js"></script>
+    <script src="basic_archiving_files/header-attrs-2.20/header-attrs.js"></script>
     <link href="basic_archiving_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
-    <script src="basic_archiving_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="basic_archiving_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
     <script src="basic_archiving_files/viz-1.8.2/viz.js"></script>
     <link href="basic_archiving_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
     <script src="basic_archiving_files/grViz-binding-1.0.9/grViz.js"></script>
@@ -17,13 +17,13 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Archiving overview
+# Code Archiving (Version Control)
 ]
 .author[
 ### John Thompson
 ]
 .date[
-### 9th Febuary 2023
+### 29th March 2023
 ]
 
 ---
@@ -37,8 +37,7 @@ class: center, middle, inverse, title-slide
 .center[![](cartoon1.png)]
 
 ---
-# Homemade Archive
-
+# Homemade Code Archive
 
 ### Working Folder  
 
@@ -62,18 +61,18 @@ fit_glms_2023_01_27.R
 ### Benefits
 
 - One active copy of each file (no confusion over which to run)   
-- Dated (able to reproduce earlier analyses)  
+- Dated (able to reproduce/approximate earlier analyses)  
 - Perhaps, it fulfils 80% of your needs
 
 ### Limitations
 
-- Restoring to an earlier date has to be done manually  
+- Restoring to an earlier date has to be done manually and is not exact   
 - Not clear what changed between versions or why they were archived    
 - Difficult to work on two developments at the same time
 - Not designed for sharing/collaboration  
   - who made what changes  
   - who has overall control  
-  - possible conflicts if two people simultaneously change a working version  
+  - possible conflicts if two people modify the same current script  
 - This archiving system is not widely used    
 - This archiving system is not integrated into RStudio or VSCode  
 ---
@@ -81,63 +80,46 @@ fit_glms_2023_01_27.R
 
 &lt;br&gt;
 
-- **git**, **subversion (SVN)** and **mercurial** are all free and they create similar, but not compatible, code archives
+- **Git** and **subversion (SVN)** are both free and create similar, but not compatible, code archives
 
-- **git** is the most widely used  
+- **Git** is the most widely used  
 
-- **git** was written by software developers for software developers  
+- **Git** was written by software developers for software developers  
 
-- the terminology of **git** can be off-putting for data scientists  
+- the terminology of **Git** can be off-putting for data scientists  
 
-- **git** is designed for code (text files). It is not suitable for archiving data  
+- **Git** is designed for version control of code. It is not suitable for archiving data  
 
-- **git** archives are project specific  
+- you make a separate **Git** archive for each project  
 
-- **git** can create local archives (on your computer) or remote archive (on a shared drive or in the cloud)  
-
----
-# Web-based Archives
-
-&lt;br&gt;
-
-- **github**, **bitbucket**, **gitlab**, **sourceforge** and many others, offer cloud-based hosting of remote **git** archives  
-
-- **github** is the most widely used  
-
-- **github** is independent of **git**  
-
-- **githib** is ideal for collaboration and dissemination  
-
-- archives copied to **github** can be private, but there is a strong case for making research archives public whenever possible  
-
-- **github** encourages openness in data analysis    
+- **Git** can create local archives (on your computer) or remote archive (on a shared drive or in the cloud)  
 
 ---
 # Git Terminology  
 
 &lt;br&gt;
 
-git term   |   meaning  
+Git term   |   meaning  
 ------------------|--------------------------------  
 **repository**   (repo) | an archive  
 **local**             | on your computer  
 **remote**            | not on your computer e.g. in the cloud  
-**to commit**         | to save/update the file(s) in an archive  
-**to stage**          | to mark a file for inclusion in the next commit  
-**.gitignore**         | text file listing files or file types that git will ignore when committing  
+**to stage**          | to mark a file for inclusion in the next commit    
+**to commit**         | to save/update the files in an archive  
+**.gitignore**         | text file listing file types that Git will ignore when committing  
 
 &lt;br&gt;
 &lt;br&gt;
 
-A local git repo is just a (hidden) folder called **.git** within your project folder. **Do not play with the contents!!**  
+A local Git repo is just a (hidden) folder called **.git** within your project folder. **Do not play with the contents!!**  
 
 ---
 # Main Branch
 
 Soon you will have a chain of commits called the main (master) branch
 
-<div id="htmlwidget-14fc0c02717ba38f4de4" style="width:504px;height:504px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14fc0c02717ba38f4de4">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 1\"]\na\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 2\"]\nb\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 3\"]\nc\n\n\nedge [color = black]\na -> {b}\nb -> {c}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-54c0625ea1421887f80e" style="width:504px;height:504px;"></div>
+<script type="application/json" data-for="htmlwidget-54c0625ea1421887f80e">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 1\"]\na\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 2\"]\nb\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 3\"]\nc\n\n\nedge [color = black]\na -> {b}\nb -> {c}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 ---
@@ -145,89 +127,110 @@ Soon you will have a chain of commits called the main (master) branch
 
 Most local repos only have one branch  
 
-but, perhaps you will want to go back to commit 2 and work on an alternative version of the code. This would create a new branch.  
+You could go back to commit 2 and work on an alternative version of the code. This would create a second branch.  
 
-If both developments are useful, you might decide to merge the branches  
+Separate branches are most useful when two people collaborate  
 
-Separate branches are most useful in remote repos when two people are able to collaborate on a project  
-
-<div id="htmlwidget-f36c6156b03c084aeac0" style="width:504px;height:200px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f36c6156b03c084aeac0">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 1\"]\na\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 2\"]\nb\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 3\"]\nc\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 4\"]\nd\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 5\"]\ne\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Merge\"]\nf\n\nedge [color = black]\na -> {b}\nb -> {c d}\nd -> {e}\nc -> {f}\ne -> {f}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1168cccfdff47bfd81f5" style="width:504px;height:200px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-1168cccfdff47bfd81f5">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 1\"]\na\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 2\"]\nb\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 3\"]\nc\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 4\"]\nd\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Commit 5\"]\ne\n\nnode [shape = square,\n      style = filled,\n      color = cyan,\n      label = \"Merge\"]\nf\n\nedge [color = black]\na -> {b}\nb -> {c d}\nd -> {e}\nc -> {f}\ne -> {f}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 # More Git Terminology
 
 &lt;br&gt;
 
-git term   |   meaning  
+Git term   |   meaning  
 ------------------|--------------------------------
 **branch**  | a chain of commits  
-**main branch**             | the original chain between the start and the most developed form of the code    
+**main branch**             | the chain into which alternative branches are merged      
 **merge**   | combine two branches  
 **HEAD**            | the commit that you are currently working on  
-**diff**     | the changes between any two commits  
+**diff**     | the code changes between two commits  
 
 ---
 
 # Git Interfaces
 
 * Via a **terminal** using linux style commands  
-  - git commit -m "Initial Commit"  
-  - does everything but not easy to learn  
-* Via a git **client**  
+  - `git commit -m "Newcastle presentation"`  
+  - does everything but not easy to learn   
+&lt;br&gt;
+* Via a Git **client**  
   - graphical interface .. click and drag  
-  - https://git-scm.com/download/gui/windows   
-  - many are free  
+  - https://Git-scm.com/download/gui/windows   
+  - many are free   
+&lt;br&gt;
 * Via **RStudio**  
-  - git tab - very basic git client  
+  - Git tab - very basic Git client  
   - terminal tab - for more advanced tasks  
 
 ---
-# Github Terminology
-
-Remote copy of a local repo
-
-github term   |   meaning  
-------------------|--------------------------------  
-**push**  | sync by copying from your local repo to your github repo  
-**pull**  | sync by copying from your github repo to your local git repo  
+# Web-based Archives
 
 &lt;br&gt;
 
-<div id="htmlwidget-758bdba4e307cdd0d028" style="width:504px;height:350px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-758bdba4e307cdd0d028">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = TB]\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 1,\n      label = \"Your\nGithub Repo\", fontsize=7]\na\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = azure,\n      color = black,\n      height = 0.3,\n      width = 1,\n      label = \"Your\nLocal git repo\", fontsize=7]\nb\n\n\nedge [color = black]\na -> {b}[label = \"  pull         \", fontsize=9]\nb -> {a}[label = \"   push  \", fontsize=9]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+- **GitHub**, **bitbucket**, **GitLab**, **sourceforge** and others, offer cloud-based hosting of **Git** archives  
+
+- **GitHub** is the most widely used  
+
+- **GitHub** is often used to mirror a local **Git** archive  
+
+- **GitHub** is ideal for collaboration and dissemination  
+
+- **GitHub** encourages openness in data analysis    
+
+- archives copied to **GitHub** can be private, but there is a strong case for making research archives public whenever possible  
+
+---
+# GitHub Terminology
+
+
+GitHub term   |   meaning   
+------------------|--------------------------------  
+**push**  | sync by copying from your local repo to your GitHub repo  
+**pull**  | sync by copying from your GitHub repo to your local repo   
+
+&lt;br&gt;
+
+<div id="htmlwidget-d5e29e78800378159ca9" style="width:504px;height:350px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-d5e29e78800378159ca9">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = TB]\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 1,\n      label = \"Your\nGitHub Repo\", fontsize=7]\na\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = azure,\n      color = black,\n      height = 0.3,\n      width = 1,\n      label = \"Your\nLocal Git repo\", fontsize=7]\nb\n\n\nedge [color = black]\na -> {b}[label = \"  pull         \", fontsize=9]\nb -> {a}[label = \"   push  \", fontsize=9]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 ---
 # More Github Terminology
 
-github term   |   meaning  
+GitHub term   |   meaning  
 ------------------|--------------------------------  
-**clone** | make a local copy of a github repo  
-**fork**  | copy another user's github repo to your own github account     
+**clone** | make a local copy of a GitHub repo  
+**fork**  | copy another user's GitHub repo to your own GitHub account     
 
-<div id="htmlwidget-5d3f022bd152ce53ea75" style="width:504px;height:350px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5d3f022bd152ce53ea75">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = fdp,\n       rankdir = TB]\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      label = \"Another\nGithub Repo\",\n      fontsize = 8]\nc\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      label = \"Your\nGithub Account\",\n      fontsize = 8,\n      size = 1]\na\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = azure,\n      color = black,\n      label = \"Your\nLocal Computer\",\n      fontsize = 8]\nb\n\n\n\n\nedge [color = black]\nc -> {a}[label = \"fork\", fontsize = 8, arrowsize=0.5, color=blue, fontcolor=blue]\nc -> {b}[label = \" clone \", fontsize = 8, arrowsize=0.5, color=blue, fontcolor=blue]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-92cb63838a9ea26489b2" style="width:504px;height:350px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-92cb63838a9ea26489b2">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = fdp,\n       rankdir = TB]\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      label = \"Another\nGitHub Repo\",\n      fontsize = 8]\nc\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      label = \"Your\nGitHub Account\",\n      fontsize = 8,\n      size = 1]\na\n\nnode [shape = rectangle,\n      style = filled,\n      fillcolor = azure,\n      color = black,\n      label = \"Your\nLocal Computer\",\n      fontsize = 8]\nb\n\n\n\n\nedge [color = black]\nc -> {a}[label = \"fork\", fontsize = 8, arrowsize=0.5, color=blue, fontcolor=blue]\nc -> {b}[label = \" clone \", fontsize = 8, arrowsize=0.5, color=blue, fontcolor=blue]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
-# Github Services  
+# GitHub Services  
 
 service  |   meaning  
 ------------------|--------------------------------  
 **Issue** | message pointing out bugs or suggesting improvements      
 **Pull request** | message to ask the owner to merge code that you have changed  
 **Project**  | spreadsheet for organising issues and pull requests  
-**Codespace**  | cloud computing provided by github   
-**Action** | task performed automatically in response to some trigger    
-**Pages** |  hosts a website linked to a repository    
+**Codespace**  | cloud computing provided by GitHub   
+**Action** | task performed automatically by GitHub in response to some trigger    
+**Pages** |  hosts for a website linked to a repository    
 **LFS**  | Large File Storage for data (separate download https://git-lfs.com/)   
 
 &lt;br&gt;
 
-**All Free** but with restrictions. For example, a free account has 120 core hours per month of Codespace, Free LFS is limited to 1GB.  
+**All Free** but with limits. For example, a free account has 120 core hours per month of Codespace, Free LFS is limited to 1GB.  
 
-Github file size limited to 50MB. Repository size limited to 1GB. An account can have any number of repos.  
+GitHub file size limited to 50MB. Repository size limited to 1GB. An account can have any number of repos.  
+
+---
+# Git Requires Effort
+
+.center[![](cartoon4.png)]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

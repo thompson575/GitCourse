@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>What Next?</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="John Thompson" />
+    <script src="What_Next_files/header-attrs-2.20/header-attrs.js"></script>
+    <link href="What_Next_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="What_Next_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="What_Next_files/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# What Next?
+]
+.subtitle[
+## more skills to improve your data analysis workflow
+]
+.author[
+### John Thompson
+]
+.date[
+### 29th March 2023
+]
+
+---
+
+
+
+
+# Rmarkdown to Quarto  
+&lt;br&gt;
+- quarto extends rmarkdown to allow code chunks in R, Python, Julia and Javascript  
+&lt;br&gt;
+- Developed by **Posit** as part of their move to support other languages  
+&lt;br&gt;
+- At present rmarkdown files can be rendered with quarto without any adaptation  
+&lt;br&gt;
+- In future, development efforts will be directed at quarto  
+
+---
+# Archiving Data  
+
+&lt;br&gt;
+- archive scripts and the raw data and you do not need to archive data files or results files unless compute time is a issue  
+
+- create a local data repo with the R Packages such as `repo` and `archivist`   
+
+- small amounts of data can be saved to GitHub (50Mb limit)  
+
+- data repositories (see https://www.nature.com/sdata/policies/repositories) will host data for sharing, e.g. as part of a publication  
+
+- cloud computing providers will host your data. Amazon AWS, Microsoft Azure, Google cloud etc. (all offer a free service to get you started)  
+
+---
+# Make Files
+
+&lt;br&gt;
+- for reproducibility, a project should be controlled by a make file (a master script that runs everything else).   
+
+- the R package `makepipe` creates a master script  
+
+- the R package `targets` creates a master script and caches intermediate results  
+
+- for maximum efficiency, `makepipe` and `targets` monitor changes to the code and only re-run code that is affected by the changes  
+
+---
+# Package Versions
+
+&lt;br&gt;
+- packages are updated regularly, with bug fixes, new features etc.    
+&lt;br&gt;
+- code that works with one version of a package, may not work with another version  
+&lt;br&gt;
+- packages are only guaranteed to work together when their versions are in sync      
+&lt;br&gt;
+- code that works for you, might fail for someone else if they use a different version of a package  
+&lt;br&gt;
+- R sets up a single library of packages that is accessed by all of your projects  
+  - updating might be good for one project and disastrous for another  
+&lt;br&gt;
+- `renv` allows separate libraries for every project and keeps track of the version numbers that you are using so that you can pass that information to a collaborator    
+
+
+---
+# Your Own Packages
+
+&lt;br&gt;
+- a personal package is a convenient way to store your functions  
+&lt;br&gt;
+- functions in a package can be documented with `roxygen2` to provide help on the syntax  
+&lt;br&gt;
+- functions in a personal package can be used across all of your projects  
+&lt;br&gt;
+- you can upload your package to GitHub and share it with colleagues or even the whole world    
+&lt;br&gt;
+- do not go public without much thought. Maintaining a package is a big undertaking  
+
+---
+# Functional programming
+
+&lt;br&gt;
+- Good Practice says that
+  - modularisation of project code makes it easier to write and maintain  
+  - using functions for repeated tasks makes scripts easier to write and maintain  
+  - well-named functions act like comments    
+&lt;br&gt;
+- the `purrr` package provides ways of applying a function multiple times with different inputs, so called functional programming (FP)    
+  - coding without loops  
+  - it takes a while to adjust to full FP but eventually your code will be easier to follow and less likely to contain errors  
+---
+# Learn html and latex
+
+&lt;br&gt;
+- markdown only offers basic formatting. At some point, you will need a format that markdown does not provide  
+&lt;br&gt;
+- it is good to have a house-style for your documents. You could start with a markdown theme found on the internet, but eventually you will want to design your own  
+&lt;br&gt;
+- to have full control over an html document you need to know the html language and to control a pdf you need to know latex  
+
+---
+# Learn Shiny
+
+&lt;br&gt;
+- shiny provides interactive visualisations  
+&lt;br&gt;
+- shiny dashboards are excellent for 
+  - exploring large datasets  
+  - communicating your results  
+&lt;br&gt;
+- visit https://shiny.rstudio.com/gallery/ to see what shiny can do  
+
+---
+# Make Better Reports
+
+&lt;br&gt;
+- learn a tables package so that you can produce pretty tables  
+  - `gt` and `flextable` are the best  
+  - `kable` and `kableExtra` are simpler alternatives  
+&lt;br&gt;
+- improve your ggplot2 skills. e.g. use `patchwork`   
+&lt;br&gt;
+- learn how to produce maps in R  
+&lt;br&gt;
+- learn how to make diagrams in R, e.g. R package `diagrammeR`,
+latex package **tikz**  
+&lt;br&gt;
+- handle BibTeX citation with an R package. see https://ropensci.org/blog/2020/05/07/rmd-citations/  
+---
+# Use Machine Learning Methods  
+&lt;br&gt;
+- any fool can run fit an ML model, very few people understand those models  
+  - understand boasting, bagging, regularization etc.    
+&lt;br&gt;
+- Machine Learning models often out-perform statistical models  
+  - try tree-based methods, such as random forests or XGBoost  
+&lt;br&gt;
+- learn to analyse textual and image data   
+&lt;br&gt;
+- learn the basics of deep learning  
+  - how do you fit a neural network?  
+  - why are large neural networks so good at prediction?  
+  - what are the problems of a model with a billion parameters?  
+  - what is the difference between a transformer and a GAN?
+---
+# Integrate AI into Your Workflow
+
+&lt;br&gt;
+- deep learning will dominate data science, at least in the medium term   
+&lt;br&gt;
+- explore ways of using ChatGPT or GPT-4 in your daily work   
+  - to explain a difficult concept    
+  - to review a topic  
+  - to write your next grant application  
+  - to write R code    
+  - to add comments to existing R code  
+  - to find errors in your code  
+&lt;br&gt;
+- consider the ethics of using AI in research.  
+  - What about the ethics of not using AI?  
+  - Do you need a group policy?   
+ 
+---
+# Learn a Second Language
+
+&lt;br&gt;
+- many R packages use C++ in the background to provide speed  
+  - learn C/C++ and the Rcpp package  
+&lt;br&gt;
+- learn python if you want to get deeper into machine learning  
+&lt;br&gt;
+- learn Julia or another of the modern languages  
+  - nearly as fast a C but without the pain  
+  - some good ML and Bayesian packages  
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

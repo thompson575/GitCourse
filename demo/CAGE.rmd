@@ -1,0 +1,96 @@
+---
+title: "The Demonstration Project: CAGE"
+author: "John Thompson"
+date: "29th March 2023"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    css: ["metropolis", "style.css"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+```
+
+#CAGE
+
+**C**lassification **A**fter **G**ene **E**xpression
+
+## Aim
+
+- find gene expression features for use in patient classification.  
+
+<br>
+
+- investigate the pros and cons of features based on principal components
+
+---
+# Data Source
+
+<br>
+The gene expression data come from,
+
+Xu K, Shi X, Husted C, Hong R et al.  
+**Smoking modulates different secretory subpopulations expressing SARS-CoV-2 entry genes in the nasal and bronchial airways.**  
+Sci Rep 2022 Oct 28;12(1):18168. 
+
+GEO archive as GSE210271. **Series Matrix File** downloaded from <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE210271>.  
+
+---
+#Study Design
+
+<br>
+- mRNA gene expression from 505 nasal epithelial brushings  
+<br>
+- Profiled using Affymetrix Gene 1.0 ST microarrays .. 21685 probes   
+<br>
+- 505 patients came from two Airway Epithelial Gene Expression in the Diagnosis of Lung Cancer (AEGIS) trials    
+<br>
+- AEGIS-1: 243 with lung cancer, 132 with benign lung disease   <br>
+- AEGIS-2: 66 with lung cancer, 64 with benign lung disease  
+
+---
+#Project Plan
+<br>
+* Use AEGIS-1 for training and AEGIS-2 for validation   
+<br>
+* Develop the analysis on a sub-sample of 1000 probes  
+<br>
+* Predict Cancer/Benign using Logistic Regression (LR)  
+<br>
+* Compare 5 feature selection methods  
+  - Rank Probes .. Select the M best probes for LR  
+  - PCA of Covariances .. Select first M PCs for LR  
+  - Rank PCs .. Select the M best PCs for LR  
+  - PCA of Correlations .. Select first M PCs for LR  
+  - Rank PCs .. Select the M best PCs for LR  
+<br>
+* Once the code is working, use same workflow on all 21,685 probes  
+
+---
+#Loss Function  
+
+Compare models using the Cross-Entropy Loss  
+
+$$
+  -\frac{1}{N} \sum_{i=1}^N y_i log(\hat{y}_i) + (1-y_i) log(1-\hat{y}_i)
+$$
+
+N is the number of subjects,  
+$y_i$ is 0 for benign cases and 1 for cancer cases  
+$\hat{y}_i$ is the predicted probability of the case being cancer under whatever model is being used  
+
+- Measures the average prediction error  
+- Equivalent to -log-Likelihood of the binomial distribution used in logistic regression
+---
+#Documentation
+
+<br>
+- Commented Scripts, Diary, Dashboard, Reports on all intermediate stages  
+<br>
+- Slide presentation on the final analysis  
+<br>
+- Draft journal article  (PLoS)  
+<br>
+- Website describing the project  

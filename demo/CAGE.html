@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>The CAGE &amp; RAGE Projects</title>
+    <title>The Demonstration Project: CAGE</title>
     <meta charset="utf-8" />
     <meta name="author" content="John Thompson" />
-    <meta name="date" content="2023-03-29" />
-    <script src="CAGE_and_RAGE_files/header-attrs-2.20/header-attrs.js"></script>
-    <link href="CAGE_and_RAGE_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
-    <link href="CAGE_and_RAGE_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="CAGE_and_RAGE_files/panelset-0.2.6/panelset.js"></script>
-    <script src="CAGE_and_RAGE_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-    <script src="CAGE_and_RAGE_files/viz-1.8.2/viz.js"></script>
-    <link href="CAGE_and_RAGE_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-    <script src="CAGE_and_RAGE_files/grViz-binding-1.0.9/grViz.js"></script>
+    <script src="CAGE_files/header-attrs-2.20/header-attrs.js"></script>
+    <link href="CAGE_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="CAGE_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="CAGE_files/panelset-0.2.6/panelset.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
@@ -20,13 +15,13 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# The CAGE &amp; RAGE Projects
+# The Demonstration Project: CAGE
 ]
 .author[
 ### John Thompson
 ]
 .date[
-### 2023-03-29
+### 29th March 2023
 ]
 
 ---
@@ -40,11 +35,11 @@ class: center, middle, inverse, title-slide
 
 ## Aim
 
-- To explore ways of selecting features from a gene expression study for later use in patient classification.  
+- find gene expression features for use in patient classification.  
 
 &lt;br&gt;
 
-- To investigate the pros and cons of features based on the principal components of the gene expression.
+- investigate the pros and cons of features based on principal components
 
 ---
 # Data Source
@@ -66,7 +61,7 @@ GEO archive as GSE210271. **Series Matrix File** downloaded from &lt;https://www
 &lt;br&gt;
 - Profiled using Affymetrix Gene 1.0 ST microarrays .. 21685 probes   
 &lt;br&gt;
-- Patients in the Airway Epithelial Gene Expression in the Diagnosis of Lung Cancer (AEGIS) trials (AEGIS-1 and AEGIS-2)  
+- 505 patients came from two Airway Epithelial Gene Expression in the Diagnosis of Lung Cancer (AEGIS) trials    
 &lt;br&gt;
 - AEGIS-1: 243 with lung cancer, 132 with benign lung disease   &lt;br&gt;
 - AEGIS-2: 66 with lung cancer, 64 with benign lung disease  
@@ -80,12 +75,14 @@ GEO archive as GSE210271. **Series Matrix File** downloaded from &lt;https://www
 &lt;br&gt;
 * Predict Cancer/Benign using Logistic Regression (LR)  
 &lt;br&gt;
-* Compare 3 methods  
+* Compare 5 feature selection methods  
   - Rank Probes .. Select the M best probes for LR  
-  - PCA .. Select first M PCs for LR  
+  - PCA of Covariances .. Select first M PCs for LR  
+  - Rank PCs .. Select the M best PCs for LR  
+  - PCA of Correlations .. Select first M PCs for LR  
   - Rank PCs .. Select the M best PCs for LR  
 &lt;br&gt;
-* Once code is working, use same workflow on all 21,685 probes  
+* Once the code is working, use same workflow on all 21,685 probes  
 
 ---
 #Loss Function  
@@ -102,93 +99,6 @@ N is the number of subjects,
 
 - Measures the average prediction error  
 - Equivalent to -log-Likelihood of the binomial distribution used in logistic regression
----
-#Documentation
-
-&lt;br&gt;
-- Commented Scripts, Diary, Dashboard, Reports on all intermediate stages  
-&lt;br&gt;
-- Slide presentation on the final analysis  
-&lt;br&gt;
-- Draft journal article  (PLoS)  
-&lt;br&gt;
-- Website describing the project  
----
-# Workflow Diagram
-
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6338e022f862c7d3538f" style="width:720px;height:576px;"></div>
-<script type="application/json" data-for="htmlwidget-6338e022f862c7d3538f">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR;]\nsubgraph cluster_1 {\nlabel = \"Data Folder\"\nfontsize = 20;\nfontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      width = 2.5,\n      height = 1.5,\n      color = beige]\na3 [style=invis]\nb3  [label = \"subject.rds expression.rds\ntraining.rds validation.rds\"]\nc3  [label = \"subset_pca.rds\nsubset_train_pca_scores.rds\nsubset_valid_pca_scores.rds\"]\n\nedge[style=invis, rankdir=TB];\na3 -> b3 -> c3;\n}\nsubgraph cluster_2 {\nlabel = \"Code/Report Folders\"\nfontsize = 20;\nfontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      width = 2,\n      height = 1,\n      color = cyan]\na  [label = \"Project Setup\nREADME.md\nLICENSE.md\"]\nb  [label = \"Read Data\nread_data.R\ndata_report.rmd\"]\nc  [label = \"Unscaled PCA\npca.R\npca_report.rmd\"]\nedge[style=invis, rankdir=TB];\na -> b -> c;\n}\nsubgraph cluster_3 {\nlabel = \"Local Repo\"\nfontsize = 20;\nfontcolor = \"blue\";\nnode[ style = filled,\n      width = 1,\n      color = yellow,\n      label = \"  \"]\na1 b1 c1\nedge[style=invis, rankdir=TB];\na1 -> b1 -> c1\n}\nsubgraph cluster_4 {\nlabel = \"Github\"\nfontsize = 20;\nfontcolor = \"blue\";\nnode[ style = filled,\n      width = 1,\n      color = green,\n      label = \"  \"]\na2 b2 c2\nedge[style=invis, rankdir=TB];\na2 -> b2 -> c2\n}\na -> a1 -> a2\nb -> b1 -> b2\nc -> c1 -> c2\nb -> b3\nc -> c3\nb3 -> c\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-
----
-#RAGE
-
-**R**egression **A**fter **G**ene **E**xpression
-
-##Aim
-
-- To explore ways of selecting features from a gene expression study for prediction of a patient characteristic.  
-
-&lt;br&gt;
-- To investigate the pros and cons of features based on the principal components of the gene expression.
-
----
-# Data Source
-
-&lt;br&gt;
-The gene expression data come from,
-
-Sayed N, Huang Y, Nguyen K, Krejciova-Rajaniemi Z et al.  
-**An inflammatory aging clock (iAge) based on deep learning tracks multimorbidity, immunosenescence, frailty and cardiovascular aging.**  
-Nat Aging 2021 Jul;1:598-615.  
-
-GEO archive as GSE168753. File **GSE168753_processed_data.csv.gz** from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753.  
-
----
-#Study Design
-
-&lt;br&gt;
-- 312 individuals  
-&lt;br&gt;
-- Profiled using Illumina HumanHT-12 V4.0 expression beadchip  
-&lt;br&gt;
-- Processed data has expression for 5000 genes  
-&lt;br&gt;
-- Subject characteristics include, age, sex, BMI    
-
----
-#Project Plan
-&lt;br&gt;
-* Use gene level expression to predict BMI     
-&lt;br&gt;
-* Develop the analysis on a sub-sample of 1000 genes  
-&lt;br&gt;
-* Use 200 subjects for training the models and 112 subjects for validation  
-&lt;br&gt;
-* Predict BMI using Linear Regression  (LReg)  
-&lt;br&gt;
-* Compare 3 methods  
-  - Rank Genes .. Select the M best genes for LReg  
-  - PCA .. Select first M PCs for LReg  
-  - Rank PCs .. Select the M best PCs for LReg  
-&lt;br&gt;
-* Once code is working, use same workflow on all 5000 genes and 312 subjects    
-
----
-#Loss Function  
-
-Compare models using the Least Squares Loss  
-
-$$
-  \frac{1}{N} \sum_{i=1}^N (y_i -\hat{y}_i)^2 
-$$
-
-N is the number of subjects,  
-`\(y_i\)` is the BMI  
-`\(\hat{y}_i\)` is the predicted BMI under whatever model is being used  
-
-- Measures the average prediction error  
-- Equivalent to -log-Likelihood of the normal distribution used in linear regression
-
 ---
 #Documentation
 

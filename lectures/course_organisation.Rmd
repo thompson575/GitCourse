@@ -1,7 +1,7 @@
 ---
 title: "Course Organisation"
 author: "John Thompson"
-date: "9th Febuary 2023"
+date: "29th March 2023"
 output:
   xaringan::moon_reader:
     self-contained: true
@@ -19,12 +19,12 @@ xaringanExtra::use_panelset()
 <br>
 ## Original request
 
--   Teach **git** and **rmarkdown**
+-   Teach **Git** and **rmarkdown**
 
 <br>
 ## My Plan
 
--   Teach **Git**, **GitHub** and **rmarkdown** 
+-   Teach **Git**, **GitHub** and **rmarkdown**  
 -   Emphasise practical skills that you can use every day  
 -   My main aim is **attitudinal change**: the course is only a success, if you come away believing that you have to change the way that you work
 
@@ -87,11 +87,13 @@ can become more productive and successful in their careers.
 ---
 # Why Context is Important
 <br>
-- ChatGPT makes some good points, but I don't think that I'd change my way of working based on such abstract ideas.  
+- I don't think that I'd change my way of working based on ChatGPT's answer    
 <br>
--   Learning the commands of rmarkdown, git and github is easy .. use Google to look them up when you need them    
+- A realistic example would be more persuasive  
 <br>
--   Efficiently integrating these skills into your day to day work is more challenging and takes experience  
+-   Learning the commands of rmarkdown, Git and GitHub is easy .. look them up when you need them    
+<br>
+-   Efficiently integrating these skills into your workflow is more challenging and takes experience  
 <br>
 -   Raises the more general question, **what is the best way to organise a data analysis project?**
 
@@ -100,18 +102,16 @@ can become more productive and successful in their careers.
 # Course Organisation
 
 <br>
--   A brief overview of Git, GitHub and rmarkdown in the context of the best way to organise a data analysis project  
+-   A brief overview of Data Analysis Best Practice, Git, GitHub and rmarkdown    
 <br>
--   After coffee; I'll create a data analysis project using best practice    
+-   After coffee; I'll create a realistic data analysis project using best practice    
 <br>
 -   The demonstration project is called CAGE (Classification After Gene Expression)  
 <br>
--   The project will use Git, GitHub and rmarkdown  
-<br>
--   Your exercise is to use the same best practice on a similar project called RAGE (Regression After Gene Expression)  
+-   You will use best practice for a similar project called RAGE (Regression After Gene Expression)  
 
 ---
-# It is a Masterclass
+# This is a Masterclass
 
 -   I will assume that you already know  
     -   basic statistical methods  
@@ -120,11 +120,8 @@ can become more productive and successful in their careers.
 <br>
 
 -   <p style="color:red">
-
-    Stop me if I assume too much
-
+    STOP ME IF I ASSUME TOO MUCH  
     </p>
-
 <br>
 -   I will avoid teaching things that you can look up on the internet  
 <br>

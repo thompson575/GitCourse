@@ -1,0 +1,305 @@
+---
+title: "Setting Up a New Project"
+subtitle: "my approach"
+author: "John Thompson"
+date: "29th March 2023"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    css: ["metropolis", "style.css"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+```
+
+
+# Choose a Project Name
+
+<br>
+- The name should be short, meaningful, memorable eg CAGE  
+<br>
+- You can waste hours thinking of a good acronym  
+<br>
+- The same name will be used for the Git and GitHub repos where you will save your work    
+<br>
+- Create a local folder with this name e.g. C:/Projects/CAGE
+
+---
+
+# Folder Structure
+
+Create the project subfolders. I use this structure for all of my projects  
+```{r eval=FALSE, echo = TRUE}
+C:/Projects/CAGE ---- code  
+                 |  
+                 ---- data    ---- archive
+                 |            |
+                 |            ---- cache
+                 |            |
+                 |            ---- rawData
+                 |  
+                 ---- docs    ---- diary
+                 |            |
+                 |            ---- pdfs
+                 |  
+                 ---- reports  
+                 |  
+                 ---- temp 
+```
+
+
+---
+# RStudio Project
+
+- Create a new RStudio project using either    
+   - `File - New Project`
+   - Project button located to the top right - `New Project`  
+<br>
+- Select `Existing Directory` and browse to the project folder  
+<br>
+- RStudio creates a file, e.g. CAGE.Rproj, to save information about your project  
+<br>
+- This RStudio project is now active  
+
+---
+# Tell RStudio about Git
+
+If this is the first time that you have used Git then you may need to help RStudio locate it
+
+## Global Options
+
+- Go to global options using the menus `Tools - Global Options`  
+<br>
+- Select the tab for version control named `Git/SVN`  
+<br>
+- RStudio may already be aware of Git, if not, 
+  - click the `enable version control` box  
+  - browse to the Git executable, perhaps `C:/Program Files/Git/bin/git.exe`  
+<br>
+- Making RStudio aware of the location of Git does not mean that Git is used for every project  
+
+---
+# Add Git to this Project
+
+## Project Options
+
+- Use menus `Tools - Project Options` and select the `Git/SVN` tab  
+<br>
+- The version control window will show `none` meaning that version control is currently off  
+<br>
+- Change it to `Git`  
+<br>
+- RStudio will need to restart so that this change can take effect  
+<br>
+- RStudio will use .Rproj to remember that Git is being used for this project.  
+
+---
+# Once Git is Activated
+
+- Git creates a hidden folder called **.git** located within the project folder .. this will contain your archived files   
+<br>
+- Git creates a text file **.gitignore** that lists files that you do NOT want to archive. Edit it as necessary.  
+    - *.html means don't archive any html files  
+    - temp/ means don't archive anything from the temp folder  
+
+```{r eval=FALSE, echo=TRUE}
+.Rhistory
+.RData
+*.Rproj
+*.html
+data/
+temp/
+docs/
+```
+
+---
+# Open a Diary
+
+Use either a paper diary or an electronic one  
+
+I keep my diary electronically in a text file called `C:/Projects/RAGE/docs/diary/diary.txt`
+
+This is how I might start the file. Each time I work on the project, I add a dated comment.  
+```{r eval=FALSE, echo=TRUE}
+Project  CAGE  
+
+Classification After Gene Expression
+
+Aim: investigation of principal component analysis for feature
+extraction from gene expression data when the ultimate goal is
+disease diagnosis.
+
+17 Feb 2023 
+Project folder created with a git archive mirrored on github.
+19th Feb 2023
+First version of read_data.R to download and read the raw expression data.
+```
+
+---
+# Create a README
+
+<br>
+
+- GitHub is used to make your work public  
+- Readers need to know what the project is about  
+- Describe the project in a markdown file **README.md**  
+- Start simple and add to the README as the project develops  
+
+<br>
+
+### Examples of README files
+
+* https://github.com/MadryLab/dataset-replication-analysis/blob/master/README.md  
+
+* https://github.com/Lorenzovazq/Cardiovascular-disease-analysis---R
+
+---
+# Things to Put in a README
+
+**Simple is good. Don't get carried away. Be Selective**
+
+* The **title** of the project  
+
+* A description of the project, particularly the **aim**  
+
+* The start date and whether the project is still **active**  
+
+* A list of active **collaborators**. An **acknowledgement** of past contributions
+
+* The **progress** to date. What conclusions you have reached so far.  
+
+* A list of **resources** used by the project (GitHub projects don't automatically use R). Perhaps a list of R packages that you rely on with their version numbers. The operating system that you use. 
+
+* The source of the **data** and whether it is public or private.  
+
+---
+# More things to put is a README
+
+* **Instructions** on how to run your code. Do some files need to be run before others, or is there a make file that runs everything?
+
+* Key **references**    
+  - Only include essential references , preferably with links. 
+  - Always include references to publications that stemmed from the project.  
+
+* **Pictures** and logos that help explain the project or which give the project an identity. Remember to add ALT-TEXT for people who are using a screen reader. Careful of copyright.
+
+* GitHub shields, **badges** and icons display information in a very concise way and are popular. Search "github badges" to find lots of resources and tips.
+
+[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)  
+
+---
+# LICENSE
+
+- The aim of openness is to make others aware of your work and to share it with them  
+- There are two dangers  
+  - Someone will use your code without acknowledging you    
+  - Someone will use your code, something will go wrong and they will blame you  
+
+- Protect yourself, by releasing your work under license.
+
+- Create a file **LICENSE.md**  
+
+- There are many licences that you could use https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository 
+
+- I use the MIT license, but you should have a group policy    
+---
+# MIT LICENSE
+
+```{r eval=FALSE, echo=TRUE}
+Copyright <YEAR> <COPYRIGHT HOLDER>
+
+Permission is hereby granted, free of charge, to any person obtaining 
+a copy of this software and associated documentation files (the
+“Software”), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+  
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+---
+# Make your first Commit
+
+- You have added or edited .gitignore, README.md and LICENSE.md
+
+- Click the `git` tab in RStudio   
+  - RStudio lists the files that have changed   
+  - Click the boxes next to them, in order to **stage** them  
+  - Status `A` means that they are Added to the list of files that will be committed  
+- Click the `commit` button    
+- Enter a commit message e.g. `Initial Commit`  
+- Click the `commit` button, just below the message box  
+- Your local Git repo has been updated  
+
+---
+# Create a GitHub Repo
+
+<br>
+
+ - Sign in to GitHub  
+ - Click the `+` icon in the top right hand corner  
+ - Choose `New Repository` and the New Repository Window Opens  
+ - Enter the repo name. **It must be the project name**  
+ - Skip the invitation to create a README and a LICENCE. You already have them  
+ - Go straight to the bottom of the window and click `Create repository`
+ - GitHub tells you what to do under the heading `push an existing repository`
+
+---
+# Set up the Link
+
+- Back in RStudio with your project active  
+- Open a Terminal and type the commands suggested by GitHub. Alternatively you can cut and paste them  
+```{r eval=FALSE, echo=TRUE}
+git remote add origin https://github.com/thompson575/CAGE.git
+git branch -M main
+git push -u origin main
+```
+
+* `git remote` tells local Git to add a connection to the GitHub repo calling it `origin`  
+* `git branch` puts you on the `main` branch of your local repo (-M means Move)  
+* `git push` sends the local repo to `origin` from `main`  
+
+- Return to your GitHub account
+- .gitignore  README.md and LICENSE.md should have been synced  
+- Pushing is usual quite quick. Try page refresh  
+- Git will remember the link, so you will not need to set it again  
+
+---
+# Do Some Data Analysis
+
+<br>
+- You are ready to download the data and start coding     
+<br>
+- Remember to commit regularly  
+---
+# Code Structure
+
+<br>
+- Separate scripts for each stage in the analysis  
+  - read_data.R, pca.R, feature.R, aegis1.R  
+<br>
+- Each script will save its results in the cache  
+<br>
+- There will be an rmarkdown report on each stage  
+<br>
+- RawData => Script1 =>  Cache  => Report1    
+- Cache   => Script2  => Cache  => Report2  
+<br>
+- Scripts produce no other outputs  
+<br>
+- Repeated tasks are performed by R functions  
+  - functions for calculation (used in scripts)  
+  - functions for display (used in reports)  

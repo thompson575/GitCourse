@@ -1,7 +1,7 @@
 ---
 title: "Rmarkdown overview"
 author: "John Thompson"
-date: "9th Febuary 2023"
+date: "29th March 2023"
 output:
   xaringan::moon_reader:
     self-contained: true
@@ -15,12 +15,14 @@ knitr::opts_chunk$set(echo = FALSE)
 # Markup Languages
 
 <br>
-- A Markup Language allows formatting instructions to be inserted into plain text e.g. to produce bold, italics, numbered lists, insert an image etc.   
+- A Markup Language inserts formatting instructions into plain text e.g. to produce bold, italics, insert an image etc.   
 
 <br>
 
 - Commonly used markup languages include **html** and **latex**   
+<br>
 
+- html and latex can do everything but are complex    
 ---
 # Markdown
 
@@ -31,7 +33,9 @@ knitr::opts_chunk$set(echo = FALSE)
 <br>
 - Markdown files have the **.md** extension  
 <br>
-- Markdown files can be rendered into an html document, pdf, Word document, slide presentation, website, blog, book, thesis, research article      
+- Markdown files can be rendered into an html document, pdf, Word document, slide presentation, website, blog, book, thesis, research article   
+<br>
+- see `RStudio - Help - Markdown Quick Reference`  
 ---
 # YAML
 
@@ -46,27 +50,31 @@ knitr::opts_chunk$set(echo = FALSE)
 ---
 title: "Markdown"
 author: "John Thompson"
-date: "2023-02-17"
+date: "29th March 2023"
 output: html_document
 ---
 
-## Markdown
+## Introduction
 
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word
 documents. For more details see the RStudio menu `Help - Markdown Quick
-Reference`.
+Reference`.   
 
 When you click the **preview** button in RStudio, the formatted document 
-is produced.
+is produced.  
 ```
 ---
 # Rmarkdown
 
 <br>
 - Rmarkdown is an R package that extends markdown by allowing blocks of R Code to be placed within a markdown file  
-- Prior to rendering, the  R code is executed and the results are knitted into the markdown file  
-- The blocks of R code are called **chunks**
+<br>
+- Prior to rendering, the R code is executed and the results are knitted into the markdown file  
+<br>
+- The blocks of R code are called **chunks**  
+<br>
 - Rmarkdown files have the **.rmd** extension.  
+<br>
 - see https://rmarkdown.rstudio.com/ 
 
 ---
@@ -76,20 +84,20 @@ is produced.
 ---
 title: "Rmarkdown"
 author: "John Thompson"
-date: "2023-02-17"
+date: "29th March 2023"
 output: html_document
 ---
 
-## RMarkdown
+## Introduction
 
 Rmarkdown allows the addition of R code to a markdown file. The chunk below
 summarises the cars data frame and adds the results to the document. 
-**echo = FALSE** tells rmarkdown to add the results but not the R code.
+**echo = FALSE** tells rmarkdown to add the results but not the R code.  
 
 ```{r echo = FALSE}
 summary(cars)
 ```
 
 When you click the **knit** button in RStudio, the R Code is executed, the
-results are inserted and then the formatted document is produced.
+results are inserted and then the formatted document is produced.  
 ````
