@@ -1,0 +1,148 @@
+---
+title: "RAGE: Questions"
+author: "John Thompson"
+date: "29 March 2023"
+output: 
+    prettydoc::html_pretty:
+      theme: architect
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read about RAGE
+
+Read the accompanying slides on RAGE and go to the GEO website to see what information is available there on study GSE168753.
+
+## Create a Course Folder
+
+Create a folder for this course. For the purpose of describing the tasks, I'll suppose that you call it Z:/GitCourse, but you can place it anywhere you wish and call it whatever you wish.
+
+## Clone CAGE
+
+The demonstration was based on the CAGE project, which is similar to RAGE except that where it predicts a binary characteristic, benign disease or lung cancer, the RAGE project predicts a continuous characteristic, body mass index (BMI).
+
+The CAGE code should serve as a model for RAGE. The demonstration code is on GitHub at https://github.com/thompson575/CAGE.git. Check it out and then make a local copy of that repo by cloning it to Z:/GitCourse/CAGE. 
+
+You will see that github.com/thompson575 also has a repository called RAGE, which contains code for the BMI prediction project. Resist the temptation to clone it. Don't look at that code until you have tried writing your own.
+
+## Local Project Setup
+
+Your version of the RAGE project is to be placed in the course folder as Z:/GitCourse/RAGE. Create this empty folder.
+
+Using the slides on Project Setup as a guide create the local subfolders, local git repository, README, LICENCE, diary etc.
+
+As you have created README.md, LICENSE.md and .gitignore files, stage and commit them to your local git repository.
+
+Download the processed data from GEO and save it in the rawData folder. 
+
+Add a note in the diary to say that you have set up the RAGE project and cloned CAGE.
+
+## GitHub Setup
+
+Create a remote repo called RAGE in your GitHub account, link it to your local RAGE repo and push the local repo to GitHub. Check that it has arrived.
+
+Note in the diary that you have created the GitHub repo.
+
+## Read the Data
+
+Write a script called read_data.R that reads the processed data from the downloaded csv file and saves it in rds format in the cache.   
+
+Separate the patient characteristics and the expression data into different data frames linked by a shared id. Save them in rds format in the cache.
+
+Draw a random sample of 1000 genes to form the basis for a smaller dataset for code development. Randomly select 200 patients for training the model and use the rest for validation. In the cache, save the training data on 1000 genes and 200 patients in an rds file and the corresponding validation data in another rds file.
+
+Run read_data.R and check that the expected files are created.
+
+Commit read_data.R to your local Git repo and then push to GitHub.
+
+Create an rmarkdown script called data_check.rmd that reads the data that you have saved in cache and prints the corresponding tibbles.
+
+Write a report on the training data using an rmarkdown script called data_report.rmd. In the report show the first few rows of a table of the mean and standard deviation of the processed expression levels for each patient and the first few rows of a separate table of the mean and standard deviation of the processed expression levels for each gene. Since you cannot show the full tables due to their size, create plots that convey the full patterns. Finish the report with a list of all of the issues that these results raise.  
+
+Commit the rmarkdown files to your local Git repo and then push to GitHub.
+
+Choose one of the points that you made at the end of your report and raise it as an issue linked to your RAGE GitHub repo. Issues are usually raised by other people, but sometimes it is useful to treat issues as notes to yourself about ways that the code could be improved.
+
+Add a note in the diary to say that you have read the data. Mention the issue.
+
+## Normalisation
+
+There is an argument for normalising the expression levels, so that the profile of expression levels is similar for each person. Why?
+
+Write a script called normalise.R that uses simple scaling to normalise the training and validation data (within each person, subtract the mean and divide by the standard deviation). Save the resulting normalised data in rds format in the cache. The tidyverse, group_by(), function makes this calculation particularly simple.  
+
+Write an rmarkdown document called normalise_check.rmd that displays the normalised data and confirms that the normalisation has done its job.  
+
+Commit normalise.R to your local Git repo and then push it to GitHub. Add a note in the diary.
+
+## Dashboard
+
+Create a shiny dashboard based on the training data that enables you to select a gene and see separate plots of BMI vs unnormalised expression and BMI vs normalised expression. Show smooths over each plot.
+
+If you have never written a shiny app, this would be a good time to make use of my RAGE repo, https://github.com/thompson575/RAGE.git. View my shiny code on GitHub and the copy and paste it into your own app.R file. Test the dashboard.
+
+Commit the shiny code to your local Git repository, push it to GitHub and add a note in the diary
+
+## Change the normalisation
+
+Imagine that a colleague suggests that you normalise by subtracting the median and dividing by the interquartile range (IQR) instead of the mean and standard deviation. Perhaps, the suggestion takes the form of a GitHub issue.
+
+You have two ways of progressing  
+
+(1) You could modify normalise.R to include both types of normalisation so that both sets of normalised data are saved in cache under different names. You could then write a script to compare the normalisations, decide which you prefer and continue the analysis with that normalisation.  
+
+(2) Edit normalise.R to immediately replace the mean and standard deviation with the median and IQR.  
+
+The first method is better if you are unsure which normalisation to use and the second is better if you are already certain that median and IQR is the way to go.  
+
+Since it offers more scope to experiment with Git, go for the second method. Modify the code of normalise.R to produce the new normalisation. Over-write the rds files of normalised data in the cache.
+
+Running the normalisation is quick, so there is no need archive the data produced by the previous normalisation. If you ever need it, you can restore the old code from Git and then re-run it.
+
+Re-run normalise_check.rmd after adding a line at the start about the change in the normalisation. Run the Dashboard to look at the effect of the changed normalisation on the plots.  
+
+Commit the new version of normalise.R and the rmarkdown file to your local Git repository and then push to GitHub. Add a note in the diary.
+
+## Change your mind again
+
+Despite your previous certainty, you now decide that using the median and IQR was not a great idea. In the literature, use of the mean and standard deviation is more usual, you decide to revert to the original normalisation.  
+
+In this example, the changes that you have made to normalise.R are very minor, but in other situations the changes that you want to undo could be quite extensive.
+
+Consider the ways in which you might continue
+
+(1) Edit normalise.R so that you again use the mean and standard deviation. Can you be sure that this version of normalise.R is exactly the same as the one that you had previously? In this case the answer is probably yes, but had you made more extensive changes you would be less confident of reversing them with 100% accuracy.  
+
+(2) Use `git reset` to restore the previous saved version of normalise.R and to delete from Git all commits made after that point. This is like moving back in time and erasing all record of your experiment with the median and IQR. This too would probably be fine in this case, but it would leave a problem if someone raised an issue over the way that you coded the second normalisation. Your work with the median and IQR would not be reproducible.  
+
+(3) Use `git checkout` to move to the previous saved version of normalise.R and continue from that point along a different branch. This would leave the branch with the median and IQR in place, even though you do not intend working on it. You are guaranteed to restore the code exactly as it was previously and you have a record of the alternative normalisation.  
+
+Implement method (3).
+
+## Slides
+
+Create a presentation with 3 slides that explains the need for normalisation and the effect of normalisation on the expression data.
+
+## Prepare a Website
+
+If you visit https://github.com/thompson575, you will see a repo called thompson575.github.io that creates a website. GitHub hosts this website via Pages. You can see the website by entering https://thompson575.github.io/ in any browser.
+
+This website was created by forking the GitHub repo academicpages/academicpages.github.io and then editing the files to insert my details. Look at the original by entering https://academicpages.github.io into a browser.  
+
+Fork the thompson575.github.io repo into your GitHub account saving it as username.github.io (of course, you insert your own username). In RStudio, create a new project with a local Git repository pulled from this new GitHub repository.
+
+In RStudio, edit the files by replacing the names, text, photo etc. You can test your changes by right clicking the index.html file and selecting the option to open it in a browser. At this stage the website is only viewable by you. When it eventually has the form that you want, push the changes to GitHub and make it live with Pages. You now have a website linked to your GitHub account. 
+
+Test your website by viewing it on your phone.
+
+## The Project Continues
+
+Data analysis is time consuming, so you would have done well to reach this point. Hopefully, you can see how the project would continue.
+
+Much as with CAGE, you would write scripts pca.R and features.R together with their corresponding rmarkdown files. Once these scripts were working correctly, you would analyse the full set of genes on all of the patients. Such an analysis would use all of the patients for training the model, so there would be no validation sample and you would only have the in-sample loss. To get a better indication of performance, you might write a script that uses cross-validation. After that you might question the use of linear regression and try a more flexible model such as XGBoost, which would allow non-linearity and interaction. 
+
+
+
+

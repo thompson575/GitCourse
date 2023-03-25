@@ -1,0 +1,97 @@
+---
+title: "The RAGE Project"
+author: "John Thompson"
+date: "29th March 2023"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    css: ["metropolis", "style.css"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+```
+
+#RAGE
+
+**R**egression **A**fter **G**ene **E**xpression
+
+##Aim
+
+- To explore ways of selecting features from a gene expression study for prediction of a patient characteristic.  
+
+<br>
+- To investigate the pros and cons of features based on the principal components of the gene expression.
+
+---
+# Data Source
+
+<br>
+The gene expression data come from,
+
+Sayed N, Huang Y, Nguyen K, Krejciova-Rajaniemi Z et al.  
+**An inflammatory aging clock (iAge) based on deep learning tracks multimorbidity, immunosenescence, frailty and cardiovascular aging.**  
+Nat Aging 2021 Jul;1:598-615.  
+
+GEO archive as GSE168753. File **GSE168753_processed_data.csv.gz** from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753.  
+
+---
+#Study Design
+
+<br>
+- 312 individuals  
+<br>
+- Profiled using Illumina HumanHT-12 V4.0 expression beadchip  
+<br>
+- Processed data has expression for 5000 genes  
+<br>
+- Subject characteristics include, age, sex, BMI    
+
+---
+#Project Plan
+<br>
+* Use gene level expression to predict BMI     
+<br>
+* Develop the analysis on a sub-sample of 1000 genes  
+<br>
+* Use 200 subjects for training the models and 112 subjects for validation  
+<br>
+* Predict BMI using Linear Regression  (LReg)  
+<br>
+* Compare 3 methods  
+  - Rank Probes .. Select the M best probes for LReg  
+  - PCA of Correlations .. Select first M PCs for LReg  
+  - Rank PCs .. Select the M best PCs for LReg  
+  - PCA of Covariances .. Select first M PCs for LReg  
+  - Rank PCs .. Select the M best PCs for LReg  
+<br>
+* Once code is working, use same workflow on all 5000 genes and 312 subjects    
+
+---
+#Loss Function  
+
+Compare models using the Least Squares Loss  
+
+$$
+  \frac{1}{N} \sum_{i=1}^N (y_i -\hat{y}_i)^2 
+$$
+
+N is the number of subjects,  
+$y_i$ is the BMI  
+$\hat{y}_i$ is the predicted BMI under whatever model is being used  
+
+- Measures the average prediction error  
+- Equivalent to -log-Likelihood of the normal distribution used in linear regression
+
+---
+#Documentation
+
+<br>
+- Commented Scripts, Diary, Dashboard, Reports on all intermediate stages  
+<br>
+- Slide presentation on the final analysis  
+<br>
+- Draft journal article  (PLoS)  
+<br>
+- Website describing the project  

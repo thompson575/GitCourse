@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The RAGE Project</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="John Thompson" />
+    <script src="RAGE_files/header-attrs-2.20/header-attrs.js"></script>
+    <link href="RAGE_files/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="RAGE_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="RAGE_files/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# The RAGE Project
+]
+.author[
+### John Thompson
+]
+.date[
+### 29th March 2023
+]
+
+---
+
+
+
+
+#RAGE
+
+**R**egression **A**fter **G**ene **E**xpression
+
+##Aim
+
+- To explore ways of selecting features from a gene expression study for prediction of a patient characteristic.  
+
+&lt;br&gt;
+- To investigate the pros and cons of features based on the principal components of the gene expression.
+
+---
+# Data Source
+
+&lt;br&gt;
+The gene expression data come from,
+
+Sayed N, Huang Y, Nguyen K, Krejciova-Rajaniemi Z et al.  
+**An inflammatory aging clock (iAge) based on deep learning tracks multimorbidity, immunosenescence, frailty and cardiovascular aging.**  
+Nat Aging 2021 Jul;1:598-615.  
+
+GEO archive as GSE168753. File **GSE168753_processed_data.csv.gz** from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753.  
+
+---
+#Study Design
+
+&lt;br&gt;
+- 312 individuals  
+&lt;br&gt;
+- Profiled using Illumina HumanHT-12 V4.0 expression beadchip  
+&lt;br&gt;
+- Processed data has expression for 5000 genes  
+&lt;br&gt;
+- Subject characteristics include, age, sex, BMI    
+
+---
+#Project Plan
+&lt;br&gt;
+* Use gene level expression to predict BMI     
+&lt;br&gt;
+* Develop the analysis on a sub-sample of 1000 genes  
+&lt;br&gt;
+* Use 200 subjects for training the models and 112 subjects for validation  
+&lt;br&gt;
+* Predict BMI using Linear Regression  (LReg)  
+&lt;br&gt;
+* Compare 3 methods  
+  - Rank Probes .. Select the M best probes for LReg  
+  - PCA of Correlations .. Select first M PCs for LReg  
+  - Rank PCs .. Select the M best PCs for LReg  
+  - PCA of Covariances .. Select first M PCs for LReg  
+  - Rank PCs .. Select the M best PCs for LReg  
+&lt;br&gt;
+* Once code is working, use same workflow on all 5000 genes and 312 subjects    
+
+---
+#Loss Function  
+
+Compare models using the Least Squares Loss  
+
+$$
+  \frac{1}{N} \sum_{i=1}^N (y_i -\hat{y}_i)^2 
+$$
+
+N is the number of subjects,  
+`\(y_i\)` is the BMI  
+`\(\hat{y}_i\)` is the predicted BMI under whatever model is being used  
+
+- Measures the average prediction error  
+- Equivalent to -log-Likelihood of the normal distribution used in linear regression
+
+---
+#Documentation
+
+&lt;br&gt;
+- Commented Scripts, Diary, Dashboard, Reports on all intermediate stages  
+&lt;br&gt;
+- Slide presentation on the final analysis  
+&lt;br&gt;
+- Draft journal article  (PLoS)  
+&lt;br&gt;
+- Website describing the project  
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
