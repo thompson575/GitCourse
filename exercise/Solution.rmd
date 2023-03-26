@@ -1,0 +1,671 @@
+---
+title: "RAGE: Notes on the Solution"
+author: "John Thompson"
+date: "29 March 2023"
+output: 
+    prettydoc::html_pretty:
+      theme: architect
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+```
+
+## Preliminaries
+
+The first step is to read the RAGE slides and create a course folder; I'll assume that you call it Z:/GitCourse.  
+
+The key differences between RAGE and CAGE are  
+- the probes have been mapped to genes. Several probes might map to a single gene, so values are total expression of all probes mapping to that gene.  
+- there are fewer genes than probes  
+- the expression levels are to be used to predict BMI in a linear regression, while in CAGE they were used to classify patients as cancer/not cancer in a logistic regression.  
+
+## Clone CAGE
+
+- Go to my GitHub account at https://github.com/thompson575  
+- You will see that I have 8 repositories, 6 of which are pinned to the front page  
+- You can see the full list by clicking repositories   
+- Click on CAGE to go to that repository  
+- Click the green Code button  
+- The https address of this repo is displayed and there is a copy icon to its right. The address is https://github.com/thompson575/CAGE.git  
+- Back on your local computer, open a terminal (any terminal will do). Enter 
+
+```{r}
+> cd Z:/GitCourse
+> git clone https://github.com/thompson575/CAGE.git
+> ls
+```
+
+`cd` stands for change directory and `ls` is the command for listing the files in the current folder. You will see that CAGE has been added.
+
+## Project Setup
+
+- Best to do this in RStudio as at some point you will need to make an RStudio project  
+- Create an empty folder called Z:/GitCourse/RAGE using the Files tab (or you could create it in Windows Explorer and find it with Files)  
+- Set up the standard folder structure. For this exercise you are to copy my preferred structure. Feel free to design your own folder structure for other analyses, but remember that good practice is to keep the same structure for every analysis.
+
+```{r eval=FALSE, echo = TRUE}
+Z:/GitCourse/RAGE ---- code  
+                  |  
+                  ---- data    ---- archive
+                  |            |
+                  |            ---- cache
+                  |            |
+                  |            ---- rawData
+                  |  
+                  ---- docs    ---- diary
+                  |            |
+                  |            ---- pdfs
+                  |  
+                  ---- reports  
+                  |  
+                  ---- temp 
+```
+
+- Create an RStudio project. Either use the Menus `File - New Project`, or click the project button to the top right. In the window that opens, select `Existing Directory` and browse to `Z:/GitCourse/RAGE`  
+- Switch on Git for this project. First, test whether RStudio knows that Git exists on your computer. In the Rstudio terminal type
+```{r}
+> git --version
+```
+- If git responds with a version number (as it probably will) then you are ready to go. If not the set up slides show you how to make RStudio aware og Git using `Tools - Global Options - Git/SVN`.
+- To switch Git on for this project use `Tools - Project Options - Git/SVN` and select git in the version control system box.  
+- RStudio will restart in order to create .gitignore and .git  
+- Edit .gitignore in RStudio's editor, so that it is in line with the standard folder structure. I suggest something like, 
+```{r eval=FALSE, echo=TRUE}
+.Rhistory
+.RData
+*.Rproj
+*.html
+data/
+temp/
+docs/
+```
+- Use the Files pane to go to the diary folder and in that folder make a text file called `diary.txt`. Put a few lines in the diary, such as  
+```{r}
+RAGE: Exercise for the Git Course
+
+29 March 2023
+set up the project folders and initialise git
+```
+- I leave my diary open as one of the Editor tabs so that it is easy to add further entries  
+- Make a README.md. Open a blank markdown file using the menus `File - New File - markdown file`. Put something in the file. `##` is markdown for making a size 2 header
+```{r}
+## RAGE: Exercise for the Git Course
+
+Started: 29 March 2023
+```
+- Create a LICENSE.md. For this exercise I suggest that you use the MIT licence. You can see the text of the license at https://opensource.org/license/mit/. Copy it to your LICENSE.md and edit the year and copyright holder.  
+- Make a git commit using the git tab. Stage the .gitignore, README.md and LICENSE.md files by clicking the boxes next to them. Then click commit, enter a commit message such as "First Commit" and click commit again.  
+- Go to GEO https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753 and under supplementary files you will see `GSE168753_processed_data.csv.gz`. Click  `http` next to this file and it will be copied into you downloads folder. From there, move it to `Z:/GitCourse/RAGE/data/rawData`.
+
+## GitHub Setup
+
+- Leave RStudio open but go to your GitHub account and sign in. The address will be https://github.com/yourusername and the sign in button is towards the top right.  
+- Once signed in, you will see a `+` towards the top right of the front page of your account. Click it and select `New Repository`  
+- Call the new repository RAGE to match your local Git repo, but skip everything else (your already have a README etc.). At the bottom of the page click the green `Create repository` button.   
+- Instructions will appear telling you what to do under different circumstances. You need to switch to RStudio and with the RAGE project active, open the terminal and type
+```{r eval=FALSE, echo=TRUE}
+git remote add origin https://github.com/username/RAGE.git
+git branch -M main
+git push -u origin main
+```
+- this sets up a connection and pushes your Git repo to GitHub. After a few seconds you should see that README.md etc have been synced with GitHub.  
+
+## Read the Data
+
+- Open a blank R script and save it as Z:/GitCourse/RAGE/read_data.R  
+- Write R code in the file that reads the processed data and saves it in cache. There are many equivalent ways of doing this. Here is some code written in my personal style. You should have your own style that you use for all R scripts.
+```{r}
+# -----------------------------------------------------------
+# RAGE: Regression After Gene Expression
+#
+# Read the processed data and save in cache 
+#
+# Date: 20 March 2023
+#
+library(tidyverse)
+library(fs)
+
+# -------------------------------------------------
+# data folders
+#
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+rawData  <- "C:/Projects/RCourse/Masterclass/RAGE/data/rawData"
+
+# -------------------------------------------------
+# dependencies - input files used by this script
+#
+url <- "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE168nnn/GSE168753/suppl/GSE168753_processed_data.csv.gz"
+
+# -------------------------------------------------
+# targets - output files created by this script
+#
+datRDS <- path(rawData, "GSE168753_processed_data.csv.gz")
+exnRDS <- path(cache,   "expression.rds")
+patRDS <- path(cache,   "patients.rds")
+valRDS <- path(cache,   "validation.rds")
+trnRDS <- path(cache,   "training.rds")
+
+# --------------------------------------------------
+# Divert warning messages to a log file
+#
+lf <- file(path(cache, "read_data_log.txt"), open = "wt")
+sink(lf, type = "message")
+
+# --------------------------------------------------
+# Download the series file from GEO. Save as serRDS
+#
+if(!file.exists(datRDS) ) 
+  download.file(url, datRDS)
+
+# --------------------------------------------------
+# patient characteristics
+#
+read_csv(datRDS) %>%
+  select(id = patient_ID, cmv = CMV, gender = GENDER,
+         age = AGE, BMI) %>%
+  saveRDS(patRDS)
+
+
+# --------------------------------------------------
+# gene expressions
+# 5090 genes for 394 patients
+#
+read_csv(datRDS) %>%
+  select(everything(), id = patient_ID, -CMV, -GENDER,
+         -AGE, -BMI) %>%
+  saveRDS(exnRDS)
+
+
+# -----------------------------------------------
+# Create a sample of 1000 probes 
+# Select 200 patients for training
+#
+set.seed(7382)
+sample(2:5091, size = 1000, replace = FALSE) %>%
+  sort() -> cols
+sample(1:394, size = 200, replace = FALSE) %>%
+  sort() -> rows
+
+# -----------------------------------------------
+# Training Data
+#
+readRDS(exnRDS) %>%
+  .[rows, c(1, cols)] %>%
+  saveRDS(trnRDS) 
+
+# -----------------------------------------------
+# Validation data
+#
+readRDS(exnRDS) %>%
+  .[-rows, c(1, cols)] %>%
+  saveRDS(valRDS) 
+
+# -----------------------------------------------
+# Close the log file
+#
+sink(type = "message" ) 
+close(lf)
+```
+
+- Use RStudio's git tab to stage and commit read_data.R to the local Git repo and then push it to GitHub with the push button.  
+- create an rmarkdown file that checks the files that you have just written to cache. The menu `File - New File - R Markdown` tries to be helpful by creating a dummy rmarkdown file. Remove everything except the YAML header and save the file as Z:/GitCourse/RAGE/reports/data_check.rmd.  
+- Edit data_check.rmd to display the data frames that you have written to cache. Here is my version
+````{r}
+---
+title: 'RAGE: Check Data'
+author: "John Thompson"
+date: "29 March 2023"
+output: 
+  html_document:
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(fs)
+
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE)
+```
+
+## Background
+
+Data for RAGE project. File GSE168753_processed_data.csv.gz
+downloaded from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753  
+
+## Warning Messages
+
+```{r}
+readLines(path(cache, "read_data_log.txt"))
+```
+
+## Patient Data
+
+```{r}
+readRDS(path(cache, "patients.rds"))
+```
+
+## Expression Data
+
+```{r}
+readRDS(path(cache, "expression.rds"))
+```
+
+## Training Data
+
+```{r}
+readRDS(path(cache, "training.rds"))
+```
+
+## Validation Data
+
+```{r}
+readRDS(path(cache, "validation.rds"))
+```
+````
+- Create a second blank rmarkdown document and save it as data_report.rmd. This is to contain a preliminary analysis of the training data. The required contents of the report are described in the question. Here is my version. It is quite minimal but it does the job
+````{r}
+---
+title: 'RAGE: Check Data'
+author: "John Thompson"
+date: "29 March 2023"
+output: 
+  html_document:
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(fs)
+
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+
+trainDF <- readRDS(path(cache, "training.rds"))
+
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE)
+
+theme_set(theme_light())
+```
+
+## Background
+
+Data for RAGE project. File GSE168753_processed_data.csv.gz downloaded from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE168753  
+
+
+## Expression by Patient
+
+```{r}
+trainDF %>%
+  pivot_longer(-id, values_to = "expression", names_to = "gene") %>%
+  group_by(id) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) )
+```
+
+Plot of standard deviation against mean
+```{r}
+trainDF %>%
+  pivot_longer(-id, values_to = "expression", names_to = "gene") %>%
+  group_by(id) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) ) %>%
+  ggplot( aes(x=mn, y=sd)) +
+  geom_point() +
+  labs( x = "Mean Expression",
+        y = "St Deviation Expression",
+        title = "Each point represents a single patient")
+```
+
+## Expression by Gene
+
+```{r}
+trainDF %>%
+  pivot_longer(-id, values_to = "expression", names_to = "gene") %>%
+  group_by(gene) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) )
+```
+
+Plot of standard deviation against mean
+```{r}
+trainDF %>%
+  pivot_longer(-id, values_to = "expression", names_to = "gene") %>%
+  group_by(gene) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) ) %>%
+  ggplot( aes(x=mn, y=sd)) +
+  geom_point() +
+  labs( x = "Mean Expression",
+        y = "St Deviation Expression",
+        title = "Each point represents a single gene")
+```
+
+## Issues
+
+- One patient has a very low standard deviation and a mean near zero. Possible technical failure.  
+- Means expression very variable across patients. Suggests the need for normalisation. Standard deviation also quite variable.  
+- Expression across genes is unremarkable. Perhaps a negative correlation between mean and standard deviation.
+````
+- Stage and Commit the two rmarkdown reports. Push to GitHub.
+- Back to GitHub. In the RAGE repo, the issues button is second along the top. Click this to open the issues page. Click new issue. Give your issue a title and then explain the problem. An issue is actually the start of a conversation.  
+- Add a note in the diary about what you have done.  
+
+## Normalisation
+
+- Any difference in overall expression profile between people is likely to be due largely to technical differences. How much RNA was obtained, how that particular microarray was processed etc.  
+- The normalisation script is very simple. Here is my version
+```{r}
+# -----------------------------------------------------------
+# RAGE: Regression After Gene Expression
+#
+# Normalise the data by mean and std  
+#
+# Date: 20 March 2023
+#
+library(tidyverse)
+library(fs)
+
+# -------------------------------------------------
+# data folders
+#
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+
+# -------------------------------------------------
+# dependencies - input files used by this script
+#
+valRDS <- path(cache,   "validation.rds")
+trnRDS <- path(cache,   "training.rds")
+# -------------------------------------------------
+# targets - output files created by this script
+#
+nvlRDS <- path(cache,   "norm_validation.rds")
+ntrRDS <- path(cache,   "norm_training.rds")
+
+# --------------------------------------------------
+# Divert warning messages to a log file
+#
+lf <- file(path(cache,   "normalise_log.txt"), open = "wt")
+sink(lf, type = "message")
+
+# -----------------------------------------------
+# Training Data
+#
+readRDS(trnRDS) %>%
+  pivot_longer(-id, names_to = "gene", values_to = "expression") %>%
+  group_by(id) %>%
+  mutate( expression = (expression - mean(expression)) / sd(expression)) %>%
+  pivot_wider(names_from = gene, values_from = expression) %>%
+  saveRDS(ntrRDS)
+
+# -----------------------------------------------
+# Validation Data
+#
+readRDS(valRDS) %>%
+  pivot_longer(-id, names_to = "gene", values_to = "expression") %>%
+  group_by(id) %>%
+  mutate( expression = (expression - mean(expression)) / sd(expression)) %>%
+  pivot_wider(names_from = gene, values_from = expression) %>%
+  saveRDS(nvlRDS)
+
+# -----------------------------------------------
+# Close the log file
+#
+sink(type = "message" ) 
+close(lf)
+```
+- Stage and commit this script and make a note in the diary
+- normalise_check() needs to display the normalised data frames and confirm that the profiles within patient are the same. Here is my version
+````{r}
+---
+title: 'RAGE: Check Normalisation'
+author: "John Thompson"
+date: "20 March 2023"
+output: 
+  html_document:
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(fs)
+
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE)
+```
+
+## Warning Messages
+
+```{r}
+readLines(path(cache, "normalise_log.txt"))
+```
+
+## Normalised Training Data
+
+```{r}
+readRDS(path(cache, "norm_training.rds")) %>%
+  print() %>%
+  pivot_longer(-id, names_to = "gene", values_to = "expression") %>%
+  group_by(id) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) )
+```
+
+## Normalised Validation Data
+
+```{r}
+readRDS(path(cache, "norm_validation.rds")) %>%
+  print() %>%
+  pivot_longer(-id, names_to = "gene", values_to = "expression") %>%
+  group_by(id) %>%
+  summarise( mn = mean(expression),
+             sd = sd(expression) )
+```
+````
+- Stage and commit this report and make a note in the diary
+- it would be interesting to look at the impact of normalisation on the patient that appeared to be a technical failure. I did not do it, but the question ought to be noted in the diary and perhaps as a GitHub issue.
+
+## Dashboard
+
+- Here is my dashboard for looking at the training data. Unless you are already familar with shiny, I suggest that you copy app.R from my RAGE repo. There is a lot of scope for adding more features.
+```{r}
+# -----------------------------------------------------------t
+# RAGE: Regression After Gene Expression
+#
+# Shint app to inspect the training data 
+#
+# Date: 20 March 2023
+#
+library(shiny)
+library(tidyverse)
+library(fs)
+
+# --- Read the data
+cache <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+
+patientDF <- readRDS(path(cache, "patients.rds") )
+trainDF   <- readRDS(path(cache, "training.rds"))
+nTrainDF  <- readRDS(path(cache, "norm_training.rds"))
+
+# --- names of the 1000 genes
+genes <- names(trainDF)[-1]
+
+# --- join expression with patient data
+trainDF %>%
+  left_join(patientDF, by = "id")  -> trainDF
+
+nTrainDF %>%
+  left_join(patientDF, by = "id")  -> nTrainDF
+
+
+
+# Define UI: 
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("RAGE: training data on 1000 genes and 200 patients"),
+
+    # Sidebar  
+    sidebarLayout(
+        sidebarPanel(
+          # select the gene
+          selectInput("select", h3("gene"), 
+                        choices = genes, 
+                        selected = genes[1]),
+          # select the smoother
+          radioButtons("smooth", label = h3("Smoother"),
+                         choices = list("linear" = 1, "lowess" = 2),
+                         selected = 1)
+        ),
+
+        # Show a plots
+        mainPanel(
+           plotOutput("rawPlot"),
+           plotOutput("normPlot")
+        )
+    )
+)
+
+# Define server logic
+server <- function(input, output) {
+
+    output$rawPlot <- renderPlot({
+      if( input$smooth == 1 ) {
+        tibble( BMI = trainDF$BMI,
+                gene     = trainDF[[input$select]] ) %>%
+          ggplot( aes(x=gene, y=BMI)) +
+          geom_point( size = 1.5 , colour = "steelblue") +
+          geom_smooth( method = "lm") +
+          labs( x = "Expression", y = "BMI",
+                title = "Without Normalisation")
+      } else {
+        tibble( BMI = trainDF$BMI,
+                gene     = trainDF[[input$select]] ) %>%
+          ggplot( aes(x=gene, y=BMI)) +
+          geom_point( size = 1.5 , colour = "steelblue") +
+          geom_smooth() +
+          labs( x = "Expression", y = "BMI",
+                title = "Without Normalisation")
+      }
+    })
+    
+    output$normPlot <- renderPlot({
+      if( input$smooth == 1 ) {
+        tibble( BMI = nTrainDF$BMI,
+                gene     = nTrainDF[[input$select]] ) %>%
+          ggplot( aes(x=gene, y=BMI)) +
+          geom_point( size = 1.5 , colour = "steelblue") +
+          geom_smooth( method = "lm") +
+          labs( x = "Expression", y = "BMI",
+                title = "Normalised")
+      } else {
+        tibble( BMI = nTrainDF$BMI,
+                gene     = nTrainDF[[input$select]] ) %>%
+          ggplot( aes(x=gene, y=BMI)) +
+          geom_point( size = 1.5 , colour = "steelblue") +
+          geom_smooth() +
+          labs( x = "Expression", y = "BMI",
+                title = "Normalised")
+      }
+    })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+## Change the normalisation
+
+- changing the normalisation is trivial so I will not print the whole script. In normalise.R Change
+```{r}
+expression = (expression - mean(expression)) / sd(expression))
+```
+into  
+```{r}
+expression = (expression - median(expression)) / 
+    (quantile(expression, prob=0.75) - quantile(expression, prob=0.25))
+```  
+- re-run normalise.R to over-write the data in cache. Run normalise_check.rmd and the shiny app with the new normalisation.  
+- Stage and commit your changes and push to GitHub. Make a note in the diary.
+
+## Restore the original normalisation
+
+- I will take this in gentle stages. First open RStudio's git tab and click the history button. The top part of the resulting window shows a list of your commits and the bottom part shows the diffs (things that changed in that commit). Note that each commit has a SHA. The full SHA is very long but you only need to know enough characters to uniquely distinguish between your commits, perhaps the first 4 characters.  
+- you can get the same information in the terminal with `git log`. Usually you only want a short SHA and commit message, so `git log --oneline` is better. Here is the start of my RAGE history
+```{r}
+199d98f features
+a880113 general updates
+c0125c4 Initial commit
+```
+- to inspect the files as they were at the time of say, the `general updates` commit, use `git checkout a880`. Your tracked files will disappear from your folders (which is a little spooky) and in their place you will find the files as they existed at the time of the general updates commit. You can look at these files, copy them, even edit them but you will not be able to commit them to Git. The problem is that you have detached your HEAD.  
+- For the question, you need to use this method to checkout back to your commit of the original normalisation.  
+- A word of warning. Git stays in this state until you say otherwise. Switch off and come back tomorrow and you will still see the files as they were in the past. If you want to restore your HEAD to the latest commit use `git checkout main`.
+- Assuming that you don't restore your HEAD, but instead you want to continue the analysis from point of the original normalisation. You need to create a second branch. There are several ways of doing this, but `checkout -b branch2` would do. (branch2 is not a good name, it would be better to give it a more descriptive name, perhaps originalnorm.)  
+- Now you can continue the analysis saving your new scripts and reports to this new branch. If it is ever, needed you could switch between the branches, perhaps developing both or just keeping one as a record of an analysis that failed. RStudio's git tab has a button for switching branches. 
+- It would be a good idea to note details of the branches in the diary. With many branches, the structure could get complex and you will forget what you did.  
+
+## Slides
+
+- I have made a set of three slides on normalisation using slidy. Here is my code
+````{r}
+---
+title: 'RAGE: Normalisation'
+author: "John Thompson"
+date: "`r Sys.Date()`"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align='center',
+                      message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(fs)
+
+cache    <- "C:/Projects/RCourse/Masterclass/RAGE/data/cache"
+trainDF  <- readRDS(path(cache, "training.rds"))
+nTrainDF <- readRDS(path(cache, "norm_training.rds"))
+```
+
+# Before Normalisation
+
+```{r}
+trainDF %>%
+  pivot_longer(-id, values_to="expression", names_to="gene") %>%
+  filter( id < 50 ) %>%
+  mutate( id = factor(id)) %>%
+  ggplot( aes(x=id, y=expression, fill=id)) +
+  geom_boxplot() +
+  labs(title = "Unnormalised expression profiles of selected patients") +
+  theme( legend.position = "none")
+```
+
+# After Normalisation
+
+```{r}
+nTrainDF %>%
+  pivot_longer(-id, values_to="expression", names_to="gene") %>%
+  filter( id < 50 ) %>%
+  mutate( id = factor(id)) %>%
+  ggplot( aes(x=id, y=expression, fill=id)) +
+  geom_boxplot() +
+  labs(title = "Normalised expression profiles of selected patients")+
+  theme( legend.position = "none")
+```
+````
+The chunk options switch off messages and warnings (loading the tidyverse generates several), suppress the printing of the R code on the slides and centre the plots within the slides. Admittedly, a very minimal set of slides, but it would be easy to make them into a proper presentation.  
+
+## Prepare a Website
+
+- to fork my webpages, sign in to your GitHub account and then go to my repo https://github.com/thompson575/thompson575.github.io, click the fork button located towards the top right and follow the instructions. Remember to rename the forked repository username.github.io, where your own username is inserted.
+- Try going to https://username.github.io/ in a browser or on your phone. You should see my face smiling back at you.
+- Edit the code. The key file is config.yml a YAML file that sets up the data for the website. Make small changes and then test them. Start by changing the name and photo.  
+- Don't like the template that I used. Try another. Git has several at https://github.com/website-templates and you will find others on the internet if you search. Delete the repository that you forked from my account using `settings`. Delete a repository is near the bottom of the page. Then fork a template that you like.  
+

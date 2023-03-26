@@ -105,7 +105,7 @@ Re-run normalise_check.rmd after adding a line at the start about the change in 
 
 Commit the new version of normalise.R and the rmarkdown file to your local Git repository and then push to GitHub. Add a note in the diary.
 
-## Change your mind again
+## Restore the original normalisation
 
 Despite your previous certainty, you now decide that using the median and IQR was not a great idea. In the literature, use of the mean and standard deviation is more usual, you decide to revert to the original normalisation.  
 
