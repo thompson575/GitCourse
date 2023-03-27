@@ -284,10 +284,6 @@ a3 -> b3 -> c3 -> d5 -> e2 -> f4
 
 - archive your code frequently  
 - archive the raw data when it changes    
-- record the methods that you use
-  - the order that scripts need to be run   
-  - the versions numbers of any software or packages    
-  - seeds used for simulations and Bayesian computations  
 - cache results   
 - archive results if the compute time is very long  
 <br>
@@ -298,16 +294,18 @@ a3 -> b3 -> c3 -> d5 -> e2 -> f4
 .panel[.panel-name[Document]
 ###Documentation  
 
-- documentation is tiresome but essential 
-- document as you go along. You will forget very quickly  
-- make a README and keep it up to date    
+- documentation is tiresome but essential. Document as you go along. You will forget very quickly  
 - do NOT use undocumented short cuts
   - click-based software or manual data editing    
   - cut/paste into a report/slides        
+- record the methods that you use
+  - the order that scripts need to be run   
+  - the versions numbers of any software or packages    
+  - seeds used for simulations and Bayesian computations  
+- make a README and keep it up to date    
 - place comments within your scripts  
 - document the data as well as your code  
-- write internal reports on all intermediate steps      
-- keep an analysis diary      
+- write internal reports on all intermediate steps and keep an analysis diary      
 ]
 .panel[.panel-name[Modules]
 ###Modularisation

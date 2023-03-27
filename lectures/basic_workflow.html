@@ -35,8 +35,8 @@ class: center, middle, inverse, title-slide
 
 
 # A Data Analysis Workflow
-<div id="htmlwidget-61fc95123537986b71ad" style="width:800px;height:600px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-61fc95123537986b71ad">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR]\n\nsubgraph cluster_1 {\n   label = \"Raw Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=9]\n   a1 [label = \"local\"]\n   a2 [label = \"local\"]\n   a3 [label = \"remote\"]\n\n   edge[style=invis];\n   a1 -> a2 -> a3;\n   }\n\nsubgraph cluster_2 {\n   label = \"R Format Copies\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   b1 b2 b3\n\n   edge[style=invis];\n   b1 -> b2 -> b3;\n   }\n\nsubgraph cluster_3 {\n   label = \"Clean Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   c1 c2 c3\n\n   edge[style=invis];\n   c1 -> c2 -> c3;\n   }\n\nsubgraph cluster_4 {\n   label = \"Preprocessed Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   d1 d2 d3 d4 d5 \n\n   edge[style=invis];\n   d1 -> d2 -> d3 -> d4 -> d5;\n}\n   \n   subgraph cluster_5 {\n   label = \"Analysis DataSets\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   e1 e2 \n\n   edge[style=invis];\n   e1 -> e2;\n   }\n   \n  subgraph cluster_6 {\n   label = \"Analysis One\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   f1 f2 f3 f4 \n\n   edge[style=invis];\n   f1 -> f2 -> f3 -> f4;\n  }\n   \n     subgraph cluster_7 {\n   label = \"Analysis Two\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   g1 g2 g3 \n\n   edge[style=invis];\n   g1 -> g2 -> g3;\n     }\n   \n        subgraph cluster_8 {\n   label = \"Analysis Three\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   h1 \n\n   }\nedge [color = black]\na1 -> b1 -> c1 -> d1 -> e1\nc1 -> d2 -> e1\na2 -> b2 -> c2 -> d3 -> e1 -> g1\ne1 -> g2 -> h1\ne1 -> g3\nc3 -> e1 -> f1 -> h1\ne1 -> f2\nc2 -> d4 -> e2 -> f3\na3 -> b3 -> c3 -> d5 -> e2 -> f4\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ac87acc4f29b18a70c00" style="width:800px;height:600px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-ac87acc4f29b18a70c00">{"x":{"diagram":"\ndigraph G {\ngraph[   rankdir = LR]\n\nsubgraph cluster_1 {\n   label = \"Raw Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = beige,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=9]\n   a1 [label = \"local\"]\n   a2 [label = \"local\"]\n   a3 [label = \"remote\"]\n\n   edge[style=invis];\n   a1 -> a2 -> a3;\n   }\n\nsubgraph cluster_2 {\n   label = \"R Format Copies\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   b1 b2 b3\n\n   edge[style=invis];\n   b1 -> b2 -> b3;\n   }\n\nsubgraph cluster_3 {\n   label = \"Clean Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   c1 c2 c3\n\n   edge[style=invis];\n   c1 -> c2 -> c3;\n   }\n\nsubgraph cluster_4 {\n   label = \"Preprocessed Data\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   d1 d2 d3 d4 d5 \n\n   edge[style=invis];\n   d1 -> d2 -> d3 -> d4 -> d5;\n}\n   \n   subgraph cluster_5 {\n   label = \"Analysis DataSets\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = lightblue,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   e1 e2 \n\n   edge[style=invis];\n   e1 -> e2;\n   }\n   \n  subgraph cluster_6 {\n   label = \"Analysis One\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   f1 f2 f3 f4 \n\n   edge[style=invis];\n   f1 -> f2 -> f3 -> f4;\n  }\n   \n     subgraph cluster_7 {\n   label = \"Analysis Two\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   g1 g2 g3 \n\n   edge[style=invis];\n   g1 -> g2 -> g3;\n     }\n   \n        subgraph cluster_8 {\n   label = \"Analysis Three\"\n   fontsize = 20;\n   fontcolor = \"blue\";\n   node [shape = rectangle,\n      style = filled,\n      fillcolor = pink,\n      color = black,\n      height = 0.3,\n      width = 0.8,\n      fontsize=7,\n      label = \" \"]\n   h1 \n\n   }\nedge [color = black]\na1 -> b1 -> c1 -> d1 -> e1\nc1 -> d2 -> e1\na2 -> b2 -> c2 -> d3 -> e1 -> g1\ne1 -> g2 -> h1\ne1 -> g3\nc3 -> e1 -> f1 -> h1\ne1 -> f2\nc2 -> d4 -> e2 -> f3\na3 -> b3 -> c3 -> d5 -> e2 -> f4\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 # Notes on the Workflow
 
@@ -80,9 +80,9 @@ class: center, middle, inverse, title-slide
 # Things Get Worse
 
 &lt;br&gt;
-- You get an email from someone who was at your Newcastle talk. Based on work, they are planning to do some experiments on mice. They want to know what happens to 1.37 when you adjust for sex. They are sure that the adjusted analysis will be quick and the result will inform their experimental design.  
+- You get an email from someone who was at your Newcastle talk. Based on that work, they are planning to do some experiments on mice. They want to know what happens to 1.37 when you adjust for sex. The analysis will be quick and it will inform their experimental design.  
 &lt;br&gt;
-- You try to reconstruct the analysis based on n=4112, but when you re-run it, you now get `1.31` and not `1.37`. You have no idea why. Sex adjustment of this new analysis changes the result to `1.16`, which could be important. You wonder if 1.37 was a typo for 1.31 in your slides.  
+- You try to reconstruct the analysis based on n=4112, but when you re-run it, you now get `1.31` and not `1.37`. You have no idea why. Sex adjustment of this new analysis changes the result to `1.16`, which could be important. You wonder if 1.37 was a typo for 1.31 in your slides or whether one of the R Packages has been updated.  
 &lt;br&gt;
 - You work for days trying to reconstruct the Newcastle analysis, but are unsuccessful. A second email questions the delay. You are still avoiding your supervisor.    
 &lt;br&gt;
@@ -145,10 +145,6 @@ class: center, middle, inverse, title-slide
 
 - archive your code frequently  
 - archive the raw data when it changes    
-- record the methods that you use
-  - the order that scripts need to be run   
-  - the versions numbers of any software or packages    
-  - seeds used for simulations and Bayesian computations  
 - cache results   
 - archive results if the compute time is very long  
 &lt;br&gt;
@@ -159,16 +155,18 @@ class: center, middle, inverse, title-slide
 .panel[.panel-name[Document]
 ###Documentation  
 
-- documentation is tiresome but essential 
-- document as you go along. You will forget very quickly  
-- make a README and keep it up to date    
+- documentation is tiresome but essential. Document as you go along. You will forget very quickly  
 - do NOT use undocumented short cuts
   - click-based software or manual data editing    
   - cut/paste into a report/slides        
+- record the methods that you use
+  - the order that scripts need to be run   
+  - the versions numbers of any software or packages    
+  - seeds used for simulations and Bayesian computations  
+- make a README and keep it up to date    
 - place comments within your scripts  
 - document the data as well as your code  
-- write internal reports on all intermediate steps      
-- keep an analysis diary      
+- write internal reports on all intermediate steps and keep an analysis diary      
 ]
 .panel[.panel-name[Modules]
 ###Modularisation
