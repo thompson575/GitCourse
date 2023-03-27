@@ -2,16 +2,51 @@
 title: "Git Recipes"
 author: "John Thompson"
 date: "29 March 2023"
-output:
-  xaringan::moon_reader:
-    self-contained: true
-    css: ["metropolis", "style.css"]
+output: 
+    prettydoc::html_pretty:
+      theme: architect
+      toc: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 xaringanExtra::use_panelset()
 ```
+# Resources
+
+This website has a good explanation of the way to use Git/GitHub in RStudio  
+https://inbo.github.io/git-course/course_rstudio.html
+
+# RStudio Git Pane
+
+## RStudio Initial Git Pane 
+![](gitpane.png)
+
+- Files that have changed since the last commit are listed in the large window  
+- Stage by clicking the small boxes next to the file names  
+- Initiate a commit with the commit button  
+- See your commit history with the History button  
+- See the code changes since the last commit with diff  
+- Pull/Push to GitHub with the Pull/Push buttons  
+- Create a new branch with the New Branch button  
+- The active branch is shown to the right of New Branch. Here is is main. Switch branches by clicking on the active branch name  
+- The More button allows you to revert to your last commit losing all of the changes made since then  
+
+## Rstudio Git commit window
+
+![](commit.png)
+- the files that are about to be committed are listed in the top left window  
+- the lower window shows the changes that you have made. Old versions in red and new versions in green  
+- the window to the top right is for the commit message  
+- the commit button completes the commit  
+- Push sends this commit to GitHub  
+
+## RStudio Git history window
+
+![](history.png)
+- The top window lists all commits on the currently active branch. Highlight a commit by clicking on it   
+- The lower grey window shows details of the currently highlighted commit, including date, SHA and commit message  
+- The bottom box shows the differences made in the highlighted commit  
 
 # Introduce yourself to Git
 
@@ -23,15 +58,16 @@ Before using git for the first time, introduce yourself by opening a terminal an
 
 This is a one-time action. Git will remember you, even when you work on a different project.  
 
-The details that you enter are attached to all of your repos.  
----
+The details that you enter are attached to all of your repositories.  
+<br>
+
 # Open a New Git Repo  
 
 ### Within an RStudio Project
 
 With the project active use the menus `Tools - Project Options` and select the `Git/SVN` tab. Select Git in the version control systems box.  
 
-RStudio will need to restart for Git to be initiated. When it returns you will see the .gitignore file and a git tab added to the Environment pane. The archive .git has also been created, but it is hidden to discourage you from messing with it. RStudio will remember that git is being used for this project.
+RStudio will need to restart for Git to be initiated. When it returns you will see the .gitignore file and a Git pane added to the Environment pane. The archive .git has also been created, but it is hidden to discourage you from messing with it. RStudio will remember that git is being used for this project.
 
 ### Outside of RStudio
 
@@ -41,23 +77,25 @@ Open a terminal and type
 > git init
 ```
 
-The first line moves the terminal focus to the place where you want the repo and the second line creates the repo. The repo will archive files in Z:/Projects/newCode or its subdirectories.  
----
+The first line moves the terminal focus to the place where you want the repo and the second line creates the repository. Git will archive files in Z:/Projects/newCode or its subdirectories.  
+<br>
+
 # Edit .gitignore
 
-.gitignore is a text file that list files and file types that you do not want to archive. It can be edited using any text editor including the Editor in RStudio.
+.gitignore is a text file that list files and file types that you do **not** want to archive. It can be edited using any text editor including the Editor in RStudio.
 
-Each file or file type goes on a new line. `myFile.xlsx` excludes a specific file. `*.xlsx` excludes all files with the .xlsx extension. `temp/` excludes all files in the temp folder. A line that begin `#` is treated as a comment.
+Each file or file type goes on a new line. A line containing `myFile.xlsx` would exclude that specific file. A line with `*.xlsx` would exclude all files with the .xlsx extension. A line with `temp/` would exclude all files in the temp folder. A line that begins `#` is treated as a comment.
 
 There are many other types ways to specify which files to exclude, but they are rarely needed.
----
-# Stage and Commit
+<br>
+
+# Stage and Commit in Git
 
 ### Within an RStudio Project
 
-With the project active, click the git tab and you will see a list of files that have changed since your last commit, excluding those ruled out by .gitignore. Git notices files that you have edited, files that you have created and files that you have deleted.  
+With the project active, click the Git pane and you will see a list of files that have changed since your last commit, excluding those ruled out by .gitignore. Git notices files that you have edited, files that you have created and files that you have deleted.  
 
-Stage the files by checking the boxes next to the files that you want to archive. Click the commit button to open the commit window. Enter a descriptive commit message that will enable you to identify this commit in future, then press the commit button.  
+Select the files that you want to archive and stage them by checking the boxes next to the files. Usual practice is to stage everything that has changed. Click the commit button to open the commit window. Enter a descriptive commit message that will enable you to identify this commit in future, then press the commit button.  
 
 ### Outside of RStudio
 
@@ -67,11 +105,20 @@ Open a terminal and type
 > git commit -m "Initial Commit"
 ```
 
-git add stages files, in this case the full stop means stage everything that is eligible, but you could name individual files or use the \* as a wildcard; `git add *.R` means stage all R scripts. git commit does just that, using the commit message that follows -m.  
----
-# Reviewing your commits
+git add stages files, in this case the full stop means stage everything that is eligible, but you could name individual files or use the \* as a wildcard; `git add *.R` means stage all R scripts. You might have several lines of git add for different files. git commit does just that and adds the commit message that follows -m.  
+<br>
 
-Is not available in RStudio, so open a terminal and enter.
+# Reviewing your Git commits
+
+### Within an RStudio Project
+
+In the Git pane there is a history button. The window that opens is divided into two parts. The upper part list all of the commits on the current branch. The lower part shows the differences between the highlighted commit and its predecessor. If the number of files that changed is large, the changes might not display in RStudio.  
+
+Commits are identified by a hash code called a SHA. This is just a long string of characters. You refer to a particular commit by its SHA, but you only need to specify enough of the leading characters to uniquely distinguish that commit from the others in this repo.
+
+### Outside of RStudio
+
+In a terminal enter.
 ```{r }
 > git log
 ```
@@ -85,27 +132,31 @@ Date:   Mon Feb 27 12:00:22 2023 +0000
 ```
 The commit code is a unique identifier (hash). You also see the author and date and the commit message. `(HEAD -> main, origin/main)` tells you that this commit is the HEAD of the main branch and that it has been synced with GitHub (origin).  
 
-If the list of commits is long then the printing will pause and show a colon. Continue printing by holding down the enter key. Quit printing with q. For more compact output try `git log --oneline`
+If the list of commits is long then the printing will pause and show a colon. Continue printing by holding down the enter key. Quit printing with q. For more compact output use `git log --oneline`
+<br>
 
-The hash is use to refer to that commit. Usually the first few characters of the hash are enough to identify it.  
----
-# Looking back
+# Viewing old Git commits
 
 Suppose that you have a chain of commits with hashes that begin  
 <pre>
     v1aa ... v2bb ... v3cc ... v4dd
 </pre>
-and you would like to look back at the code at the time of the v2bb commit. You do it with  
-`git checkout v2bb`  
-You working folders will now be populated with the files as they used to be.  
+and you would like to look back at the code at the time of the v2bb commit. You do it with the terminal command   
+```{r}
+> git checkout v2bb
+```
+Your working folders will instantly be populated with the files as they used to be. It is slightly spooky as it looks as it your current versions have disappeared.  
 
-Look at the files make changes if you wish, but you will not be allowed to commit those changes. If you were allowed to commit them, say as v5ee, the chain would become ambiguous. What follows v2bb? is it v5ee or v3cc?  
+Look at the files, make changes if you wish, but you will not be allowed to commit those changes. If you were allowed to commit them, say as v5ee, the chain would become ambiguous. What follows v2bb? is it v5ee or v3cc?  
 
 After looking at the old versions you can return to the latest commit with  
-`git checkout master`  
-or possibly `git checkout main` depending on your git setup. 
----
-# Dropping bad commits
+```{r}
+> git checkout main
+```
+or possibly `git checkout master` depending on your git setup. 
+<br>
+
+# Dropping bad Git commits
 
 Suppose that you have a chain of commits with hashes that begin  
 <pre>
@@ -113,27 +164,59 @@ Suppose that you have a chain of commits with hashes that begin
 </pre>
 You realise that v3cc contained a major error. You want to go back to v2bb and start again.  
 
-`git reset v2bb`  
+```{r}
+git reset v2bb  
+```
 restores v2bb and deletes all record of v3cc and v4dd. The chain becomes  
-v1aa ... v2bb   
-How you can edit the code and commit the changes. There is no ambiguity in the chain.
----
-# Creating a branch
+<pre>
+    v1aa ... v2bb   
+<\pre>
+Now you can edit the code and commit the changes. There is no ambiguity in the chain.  
+
+Be aware that v3cc and v4dd are permanently lost. There is no way back.
+<br>
+
+# Creating a Git branch
+
+### Within an RStudio Project
+
+On the Git pane there is a `New Branch` button that will create a new branch starting at the current HEAD commit. The logic is explained in the following section on working in the terminal. RStudio has no means of storing an old commit so, in RStudio, you can only branch from the end of the branch that you are currently working on.
+
+### Outside of RStudio
 
 Suppose that you have a chain of commits with hashes that begin  
 <pre>
     v1aa ... v2bb ... v3cc ... v4dd
 </pre>
-You inspect the earlier code with  
-`git checkout v2bb`  
-You decide that you would like to develop v2bb in an alternative way. You cannot save these developments in this chain (branch) because it would become ambiguous. So you start a new branch. It needs a name say you call it `alt`.  
+You inspect the earlier code with the terminal command    
+```{r}
+> git checkout v2bb 
+```
+You decide that you would like to develop v2bb in an alternative way. You cannot save these developments in this chain (branch) because it would become ambiguous. You need a new branch and the new branch needs a name, say you call it `alt`.  
 
-With v2bb active type  
-`git checkout -b alt`  
-and you will now have a new branch. When you commit your new changes perhaps with hash v5ee the structure of the git repository will be  
+With v2bb active, create the new alt branch with  
+```{r}
+> git checkout -b alt
+```
+You now have a new branch. When you commit your new changes, perhaps as v5ee, the structure of the git repository will be  
 <pre>
     v1aa ... v2bb ... v3cc ... v4dd     main/master branch  
                 \  
                   ... v5ee              alt branch   
 </pre>
-You can switch between branches and work independently on th two versions.
+You can switch between branches and work independently on the v4dd and v5ee.
+<br>
+
+# Switching between Git branches
+
+### Within an RStudio Project
+
+The current branch is shown to the top right of the Git pane and can be changed by clicking on it.
+
+### Outside of RStudio
+
+Switch to branch alt with
+```{r}
+> git checkout alt
+```
+
