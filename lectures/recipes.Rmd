@@ -220,3 +220,24 @@ Switch to branch alt with
 > git checkout alt
 ```
 
+# Clone from GitHub
+
+Go to the repository that you want to clone from GitHub and click the green code button. 
+
+The window that opens will show the https url of this repo. There is copy icon to the right of the url. Copy the url and open a terminal on your local machine.
+
+In the terminal move to the place where you want the cloned copy to go and then git clone the url of the repo
+```{r}
+> cd C:/Projects
+> git clone https://github.com/thompson575/CAGE.git
+```
+
+In this example, my CAGE repo would be cloned as a folder within C:/Projects.
+
+# Fork a GitHub Repo
+
+To fork a GitHub repo into you account. Go to the repository that you want to copy. To the top right of the repo's front page there is a fork button. Click it and follow the instructions. Return to your GitHub account. A copy of the repo will be there.  
+
+You will be able to edit your version of the repo, copy it, even delete it, but you will not be able to affect the original.  
+
+You could make a pull request to the owner of the original repo, suggesting that they incorporate you changes, but it is up to them whether or not they do so.
